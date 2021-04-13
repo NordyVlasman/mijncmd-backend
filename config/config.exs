@@ -10,6 +10,12 @@ use Mix.Config
 config :mijncmd,
   ecto_repos: [Mijncmd.Repo]
 
+config :mijncmd, Mijncmd.Guardian,
+  issuer: "mijncmd",
+  secret_key: "x8Hm9S7RQnZy/3CzmOTidj3J5BE45pJWMKvXlGrIloQapFB7LpWh42DcR8wsMZBU93Q=",
+  ttl: {3, :days}
+
+
 # Configures the endpoint
 config :mijncmd, MijncmdWeb.Endpoint,
   url: [host: "localhost"],

@@ -12,10 +12,7 @@ defmodule MijncmdWeb.Router do
   scope "/api" do
     pipe_through :graphql
 
-    forward "/", Absinthe.Plug, schema: MijncmdWeb.Schema
-  end
-
-  if Mix.env == :dev do
     forward "/graphiql", Absinthe.Plug.GraphiQL, schema: MijncmdWeb.Schema
+    forward "/", Absinthe.Plug, schema: MijncmdWeb.Schema
   end
 end

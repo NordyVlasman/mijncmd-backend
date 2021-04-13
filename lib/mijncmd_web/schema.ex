@@ -3,6 +3,7 @@ defmodule MijncmdWeb.Schema do
 
   alias MijncmdWeb.Schema
 
+  import_types Absinthe.Type.Custom
   import_types(Schema.UserTypes)
 
   query do
