@@ -5,7 +5,17 @@ defmodule MijncmdWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/api", MijncmdWeb do
-    pipe_through :api
+  pipeline :graphql do
+    plug MijncmdWeb.Context
+  end
+
+  scope "/api" do
+    pipe_through :graphql
+
+    forward "/", Absinthe.Plug, schema: MijncmdWeb.Schema
+  end
+
+  if Mix.env == :dev do
+    forward "/graphiql", Absinthe.Plug.GraphiQL, schema: MijncmdWeb.Schema
   end
 end
