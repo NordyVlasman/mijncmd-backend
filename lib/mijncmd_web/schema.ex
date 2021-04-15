@@ -7,7 +7,7 @@ defmodule MijncmdWeb.Schema do
   import_types(Schema.UserTypes)
 
   query do
-    # Add queries here.
+    import_fields(:user_query)
   end
 
   mutation do

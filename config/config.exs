@@ -12,6 +12,7 @@ config :mijncmd,
 
 config :mijncmd, Mijncmd.Guardian,
   issuer: "mijncmd",
+  verify_issuer: true,
   secret_key: "x8Hm9S7RQnZy/3CzmOTidj3J5BE45pJWMKvXlGrIloQapFB7LpWh42DcR8wsMZBU93Q=",
   ttl: {3, :days}
 

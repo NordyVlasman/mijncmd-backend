@@ -16,8 +16,8 @@ defmodule MijncmdWeb.Context do
   end
 
   defp build_context(conn) do
-    with ["" <> token] <- get_req_header(conn, "authorization"),
-          {:ok, user, _claims} <- Mijncmd.Guardian.resource_from_token(token) do
+    with ["Bearer " <> token] <- get_req_header(conn, "authorization"),
+         {:ok, user, _claims} <- Mijncmd.Guardian.resource_from_token(token) do
       {:ok, %{current_user: user}}
     end
   end

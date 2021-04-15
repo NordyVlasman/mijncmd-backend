@@ -45,7 +45,8 @@ defmodule Mijncmd.MixProject do
       {:absinthe, "~> 1.5"},
       {:absinthe_plug, "~> 1.5"},
       {:bcrypt_elixir, "~> 2.0"},
-      {:guardian, "~> 2.0"}
+      {:guardian, "~> 2.0"},
+      {:cors_plug, "~> 2.0"}
     ]
   end
 

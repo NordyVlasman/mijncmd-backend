@@ -2,6 +2,7 @@ defmodule MijncmdWeb.Schema.UserTypes do
   use Absinthe.Schema.Notation
 
   alias MijncmdWeb.Resolvers
+  alias MijncmdWeb.Schema.Middleware
 
   @desc "A user"
   object :user do
@@ -15,7 +16,7 @@ defmodule MijncmdWeb.Schema.UserTypes do
     """
 
     @desc "Create a user"
-    field :create_user, :user do
+    field :register, :user do
       arg(:email, non_null(:string))
       arg(:password, non_null(:string))
 
@@ -28,10 +29,20 @@ defmodule MijncmdWeb.Schema.UserTypes do
     login with the params
     """
 
-    field :create_session, :session do
+    field :login, :session do
       arg(:email, non_null(:string))
       arg(:password, non_null(:string))
       resolve(&Resolvers.Accounts.login/2)
+    end
+  end
+
+  object :user_query do
+    @desc """
+    return a user
+    """
+
+    field :get_user, :user do
+      resolve(&Resolvers.Accounts.current/2)
     end
   end
 
