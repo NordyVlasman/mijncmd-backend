@@ -2,7 +2,6 @@ defmodule MijncmdWeb.Schema.UserTypes do
   use Absinthe.Schema.Notation
 
   alias MijncmdWeb.Resolvers
-  alias MijncmdWeb.Schema.Middleware
 
   @desc "A user"
   object :user do
