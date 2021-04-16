@@ -2,7 +2,7 @@ defmodule MijncmdWeb.Schema.Middleware.Authorize do
   @behaviour Absinthe.Middleware
 
   def call(resolution, _) do
-    with %{current_user: current_user} <- resolution.context do
+    with %{current_user: _current_user} <- resolution.context do
       resolution
     else
       _ ->

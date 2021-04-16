@@ -5,6 +5,12 @@ defmodule Mijncmd.Accounts.User do
   @derive {Inspect, except: [:password]}
   schema "users" do
     field :email, :string
+    field :name, :string
+
+    field :website_url, :string
+    field :github_url, :string
+    field :dribbble_url, :string
+
     field :password, :string, virtual: true
     field :hashed_password, :string
     field :confirmed_at, :naive_datetime
@@ -12,9 +18,12 @@ defmodule Mijncmd.Accounts.User do
     timestamps()
   end
 
+  @required_fields ~w(email password name)a
+  @optional_fields ~w(website_url github_url dribbble_url)a
+
   def registration_changeset(user, attrs, opts \\ []) do
     user
-    |> cast(attrs, [:email, :password])
+    |> cast(attrs, @required_fields ++ @optional_fields)
     |> validate_email()
     |> validate_password(opts)
   end

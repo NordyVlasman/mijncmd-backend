@@ -5,8 +5,15 @@ defmodule Mijncmd.Repo.Migrations.CreateUsers do
     execute "CREATE EXTENSION IF NOT EXISTS citext", ""
 
     create table(:users) do
+      add :name, :string, null: false
       add :email, :citext, null: false
+
+      add :website_url, :string, null: true
+      add :github_url, :string, null: true
+      add :dribbble_url, :string, null: true
+
       add :hashed_password, :string, null: false
+
       add :confirmed_at, :naive_datetime
 
       timestamps()

@@ -6,6 +6,12 @@ defmodule MijncmdWeb.Schema.UserTypes do
   @desc "A user"
   object :user do
     field :email, :string
+    field :name, :string
+
+    field :website_url, :string
+    field :github_url, :string
+    field :dribbble_url, :string
+
     field :id, :id
   end
 
@@ -18,6 +24,10 @@ defmodule MijncmdWeb.Schema.UserTypes do
     field :register, :user do
       arg(:email, non_null(:string))
       arg(:password, non_null(:string))
+      arg(:name, non_null(:string))
+      arg(:website_url, :string)
+      arg(:github_url, :string)
+      arg(:dribbble_url, :string)
 
       resolve(&Resolvers.Accounts.create_user/3)
     end
