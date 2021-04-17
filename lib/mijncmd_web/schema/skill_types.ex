@@ -22,7 +22,6 @@ defmodule MijncmdWeb.Schema.SkillTypes do
   end
 
   object :skill_query do
-
     @desc "Get all skills"
     field :skills, list_of(:skill) do
       resolve(&Resolvers.Skills.list_skills/3)
