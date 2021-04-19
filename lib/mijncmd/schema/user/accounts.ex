@@ -174,4 +174,11 @@ defmodule Mijncmd.Accounts do
       {:error, :user, changeset, _} -> {:error, changeset}
     end
   end
+
+
+  def get_user_overview(%User{} = user) do
+    Repo.preload(user, [
+      user_skills: [:skill]
+    ])
+  end
 end

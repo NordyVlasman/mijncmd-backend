@@ -47,7 +47,12 @@ defmodule Mijncmd.MixProject do
       {:bcrypt_elixir, "~> 2.0"},
       {:guardian, "~> 2.0"},
       {:cors_plug, "~> 2.0"},
-      {:scrivener, "~> 2.0"}
+      {:scrivener, "~> 2.0"},
+      {:slugger, "~> 0.3"},
+      {:hashids, "~> 2.0"},
+      {:ecto_enum, "~> 1.0"},
+      {:timex, "~> 3.0"},
+      {:arc_ecto, "~> 0.11.1"},
     ]
   end
 

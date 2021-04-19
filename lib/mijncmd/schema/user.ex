@@ -2,6 +2,11 @@ defmodule Mijncmd.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Mijncmd.{
+    Community.Post,
+    Skills.UserSkill
+  }
+
   @derive {Inspect, except: [:password]}
   schema "users" do
     field :email, :string
@@ -14,6 +19,9 @@ defmodule Mijncmd.Accounts.User do
     field :password, :string, virtual: true
     field :hashed_password, :string
     field :confirmed_at, :naive_datetime
+
+    has_many :posts, Post, on_delete: :delete_all
+    has_many :user_skills, UserSkill, on_delete: :delete_all
 
     timestamps()
   end
