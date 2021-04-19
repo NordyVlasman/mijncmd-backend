@@ -6,6 +6,7 @@ defmodule MijncmdWeb.Schema do
   import_types Absinthe.Type.Custom
   import_types(Schema.UserTypes)
   import_types(Schema.SkillTypes)
+  import_types(Schema.PostTypes)
 
   query do
     # user
@@ -27,7 +28,6 @@ defmodule MijncmdWeb.Schema do
     import_fields(:create_skill_mutation)
 
     # posts
-
-    # threads
+    import_fields(:create_post_mutation)
   end
 end

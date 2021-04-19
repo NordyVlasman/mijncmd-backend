@@ -4,7 +4,8 @@ defmodule Mijncmd.Post do
   alias Mijncmd.{
     Files,
     Accounts.User,
-    Regexp
+    Regexp,
+    PostSkill
   }
 
   schema "posts" do
@@ -23,6 +24,9 @@ defmodule Mijncmd.Post do
 
     belongs_to :author, User
 
+    has_many :post_skills, PostSkill, on_delete: :delete_all
+    has_many :skills, through: [:post_skills, :skill]
+
     timestamps()
   end
 
@@ -33,7 +37,7 @@ defmodule Mijncmd.Post do
     post
     |> cast(
       attrs,
-      ~w(title subtitle slug canonical_url author_id editor_id published published_at body tldr)a
+      ~w(title subtitle slug description author_id published published_at body)a
     )
     |> validate_required([:title, :author_id])
     |> validate_format(:slug, Regexp.slug(), message: Regexp.slug_message())

@@ -5,8 +5,7 @@ defmodule MijncmdWeb.Schema.SkillTypes do
 
   @desc "A skill"
   object :skill do
-    field :title, :string
-    field :downcase_name, :string
+    field :name, :string
     field :description, :string
     field :slug, :string
   end
@@ -23,8 +22,10 @@ defmodule MijncmdWeb.Schema.SkillTypes do
     """
 
     @desc "Create a skill"
-    field :create_skill, :user_skill do
-      arg(:title, non_null(:string))
+    field :create_skill, :skill do
+      arg(:name, non_null(:string))
+      arg(:slug, non_null(:string))
+      arg(:description, :string)
       resolve(&Resolvers.Skills.create_skill/3)
     end
   end

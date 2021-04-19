@@ -3,8 +3,8 @@ defmodule Mijncmd.Accounts.User do
   import Ecto.Changeset
 
   alias Mijncmd.{
-    Community.Post,
-    Skills.UserSkill
+    UserSkill,
+    Post
   }
 
   @derive {Inspect, except: [:password]}
@@ -20,8 +20,9 @@ defmodule Mijncmd.Accounts.User do
     field :hashed_password, :string
     field :confirmed_at, :naive_datetime
 
-    has_many :posts, Post, on_delete: :delete_all
     has_many :user_skills, UserSkill, on_delete: :delete_all
+
+    has_many :posts, Post, foreign_key: :author_id
 
     timestamps()
   end
