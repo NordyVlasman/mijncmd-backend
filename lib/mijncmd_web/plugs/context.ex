@@ -3,22 +3,28 @@ defmodule MijncmdWeb.Context do
 
   import Plug.Conn
 
+  alias Mijncmd.{
+    Guardian,
+    Accounts.User
+  }
+
   def init(opts), do: opts
 
   def call(conn, _) do
-    case build_context(conn) do
-      {:ok, context} ->
-        put_private(conn, :absinthe, %{context: context})
-
-      _ ->
-        conn
-    end
+    context = build_context(conn)
+    Absinthe.Plug.put_options(conn, context: context)
   end
 
-  defp build_context(conn) do
+  @doc """
+  Return the current user context based on the authorization header
+  """
+  def build_context(conn) do
     with ["Bearer " <> token] <- get_req_header(conn, "authorization"),
-         {:ok, user, _claims} <- Mijncmd.Guardian.resource_from_token(token) do
-      {:ok, %{current_user: user}}
+         {:ok, claim} <- Guardian.decode_and_verify(token),
+         user when not is_nil(user) <- User.find(claim["sub"]) do
+      %{current_user: user}
+    else
+      _ -> %{}
     end
   end
 end

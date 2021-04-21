@@ -18,6 +18,7 @@ defmodule Mijncmd.Post do
     field :image, Files.Image.Type
 
     field :body, :string
+    field :description, :string
 
     field :published, :boolean, default: false
     field :published_at, :utc_datetime
@@ -52,6 +53,26 @@ defmodule Mijncmd.Post do
     |> insert_changeset(attrs)
     |> file_changeset(attrs)
   end
+
+  def user_changeset(struct, attrs \\ %{}) do
+    struct
+    |> cast(attrs, [
+      :author_id,
+      :title,
+      :slug,
+      :description,
+      :body
+    ])
+    |> validate_required([:body])
+  end
+
+  def preload_all(post) do
+    post
+    |> preload_author()
+  end
+
+  def preload_author(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :author)
+  def preload_author(post), do: Repo.preload(post, :author)
 
   defp validate_published_has_published_at(changeset) do
     published = get_field(changeset, :published)

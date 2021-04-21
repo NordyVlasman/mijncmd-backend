@@ -4,7 +4,9 @@ defmodule Mijncmd.Accounts.User do
 
   alias Mijncmd.{
     UserSkill,
-    Post
+    Post,
+    Accounts.User,
+    Repo
   }
 
   @derive {Inspect, except: [:password]}
@@ -22,7 +24,7 @@ defmodule Mijncmd.Accounts.User do
 
     has_many :user_skills, UserSkill, on_delete: :delete_all
 
-    has_many :posts, Post, foreign_key: :author_id
+    has_many :posts, Post, foreign_key: :author_id, on_delete: :delete_all
 
     timestamps()
   end
@@ -64,6 +66,10 @@ defmodule Mijncmd.Accounts.User do
     else
       changeset
     end
+  end
+
+  def find(id) do
+    Repo.get(User, id)
   end
 
   @doc """

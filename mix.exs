@@ -44,6 +44,7 @@ defmodule Mijncmd.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:absinthe, "~> 1.5"},
       {:absinthe_plug, "~> 1.5"},
+      {:absinthe_phoenix, "~> 2.0.0"},
       {:bcrypt_elixir, "~> 2.0"},
       {:guardian, "~> 2.0"},
       {:cors_plug, "~> 2.0"},
@@ -53,6 +54,7 @@ defmodule Mijncmd.MixProject do
       {:ecto_enum, "~> 1.0"},
       {:timex, "~> 3.0"},
       {:arc_ecto, "~> 0.11.1"},
+      {:dataloader, "1.0.4"}
     ]
   end
 

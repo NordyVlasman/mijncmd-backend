@@ -1,11 +1,13 @@
 defmodule MijncmdWeb.Resolvers.Posts do
   alias Mijncmd.{
     Post,
-    Repo
+    Repo,
+    Accounts.User
   }
 
-  import Ecto
+  import Absinthe.Resolution.Helpers
   import Ecto.Query, warn: false
+  import Ecto
 
   def create_post(_parent, args, %{context: %{current_user: user}}) do
     if user do
@@ -13,13 +15,20 @@ defmodule MijncmdWeb.Resolvers.Posts do
       |> build_assoc(:posts)
       |> Post.insert_changeset(args)
       |> Repo.insert()
-      # changeset = Post.insert_changeset(%Post{}, args)
-      # case Repo.insert(changeset) do
-      #   {:ok, post} ->
-      #     {:ok, post}
-      #   {:error, changeset} ->
-      #     {:error, changeset}
-      # end
     end
+  end
+
+  def create_post(%Post{} = post, _, %{context: %{loader: loader}}) do
+    loader
+    |> Dataloader.load(:db, User, post.author_id)
+    |> on_load(fn loader ->
+      actor =
+        loader
+        |> Dataloader.get(:db, User, post.author_id)
+
+      author = actor
+
+      {:ok, author}
+    end)
   end
 end

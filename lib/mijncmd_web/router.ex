@@ -6,6 +6,7 @@ defmodule MijncmdWeb.Router do
   end
 
   pipeline :graphql do
+    # plug :fetch_current_user_by_token
     plug MijncmdWeb.Context
   end
 
