@@ -3,7 +3,7 @@ defmodule MijncmdWeb.Mutations.Skill do
     Skills.CreateSkill
   }
 
-  def create_skill(args, %{context: %{current_user: user}}) do
+  def create_skill(args, %{context: %{current_user: _user}}) do
     with {:ok, %{skill: skill}} <- CreateSkill.perform(args) do
       {:ok, %{success: true, skill: skill, errors: []}}
     else

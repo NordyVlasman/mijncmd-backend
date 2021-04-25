@@ -33,6 +33,7 @@ defmodule MijncmdWeb.Schema.Objects do
 
     field :email, :string
     field :name, :string
+    field :avatar, :string
 
     field :website_url, :string
     field :github_url, :string

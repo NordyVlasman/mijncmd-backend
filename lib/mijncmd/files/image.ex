@@ -1,5 +1,5 @@
 defmodule Mijncmd.Files.Image do
-  use Mijncmd.File, [:jpg, :jpeg, :png, :gif, :svg]
+  use Mijncmd.File, [:jpg, :jpeg, :png, :gif, :svg, :string]
 
   @versions [:original, :large, :medium, :small]
 

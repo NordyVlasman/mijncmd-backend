@@ -31,4 +31,13 @@ defmodule MijncmdWeb.Resolvers.Posts do
       {:ok, author}
     end)
   end
+
+  def list_posts(_user, _args, _resolution) do
+    posts =
+      Post.published()
+      |> Post.preload_all()
+      |> Repo.all()
+      # IO.puts(posts)
+    {:ok, posts}
+  end
 end

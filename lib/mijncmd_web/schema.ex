@@ -7,6 +7,7 @@ defmodule MijncmdWeb.Schema do
 
   import_types MijncmdWeb.Schema.Objects
   import_types MijncmdWeb.Schema.Mutations
+  import_types Absinthe.Plug.Types
 
   def plugins do
     [Absinthe.Middleware.Dataloader] ++ Absinthe.Plugin.defaults()
@@ -27,6 +28,11 @@ defmodule MijncmdWeb.Schema do
         {:ok, current_user}
       end)
     end
+
+    @desc "All the posts"
+    field :get_posts, list_of(:post) do
+      resolve &MijncmdWeb.Resolvers.Posts.list_posts/3
+    end
   end
 
   mutation do
@@ -43,6 +49,7 @@ defmodule MijncmdWeb.Schema do
       arg :website_url, :string
       arg :github_url, :string
       arg :dribbble_url, :string
+      arg :avatar, :upload
 
       resolve &MijncmdWeb.Resolvers.Accounts.create_user/3
     end

@@ -1,12 +1,14 @@
 defmodule Mijncmd.Accounts.User do
-  use Ecto.Schema
+  use Mijncmd.Schema
   import Ecto.Changeset
 
   alias Mijncmd.{
     UserSkill,
     Post,
     Accounts.User,
-    Repo
+    Repo,
+    Files,
+    Regexp
   }
 
   @derive {Inspect, except: [:password]}
@@ -22,21 +24,37 @@ defmodule Mijncmd.Accounts.User do
     field :hashed_password, :string
     field :confirmed_at, :naive_datetime
 
-    has_many :user_skills, UserSkill, on_delete: :delete_all
+    # field :avatar, Files.Image.Type
+    field :avatar, :string
 
+    has_many :user_skills, UserSkill, on_delete: :delete_all
     has_many :posts, Post, foreign_key: :author_id, on_delete: :delete_all
 
     timestamps()
   end
 
   @required_fields ~w(email password name)a
-  @optional_fields ~w(website_url github_url dribbble_url)a
+  @optional_fields ~w(website_url github_url dribbble_url avatar)a
 
   def registration_changeset(user, attrs, opts \\ []) do
     user
     |> cast(attrs, @required_fields ++ @optional_fields)
     |> validate_email()
     |> validate_password(opts)
+  end
+
+  def insert_changeset(user, attrs \\ %{}) do
+    allowed =
+      ~w(email name website_url github_url dribbble_url)a
+    changeset_with_allowed_attrs(user, attrs, allowed)
+  end
+  def file_changeset(user, attrs \\ %{}),
+    do: cast_attachments(user, attrs, [:avatar], allow_urls: true)
+
+  def update_changeset(user, attrs \\ %{}) do
+    user
+    |> insert_changeset(attrs)
+    |> file_changeset(attrs)
   end
 
   defp validate_email(changeset) do
@@ -130,5 +148,12 @@ defmodule Mijncmd.Accounts.User do
       else
         add_error(changeset, :current_password, "is not valid")
       end
+    end
+
+    defp changeset_with_allowed_attrs(user, attrs, allowed) do
+      user
+      |> cast(attrs, allowed)
+      |> validate_required([:name, :email])
+      |> validate_format(:email, Regexp.email())
     end
 end

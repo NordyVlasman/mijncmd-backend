@@ -8,6 +8,8 @@ defmodule Mijncmd.Repo.Migrations.CreateUsers do
       add :name, :string, null: false
       add :email, :citext, null: false
 
+      add :avatar, :string
+
       add :website_url, :string, null: true
       add :github_url, :string, null: true
       add :dribbble_url, :string, null: true

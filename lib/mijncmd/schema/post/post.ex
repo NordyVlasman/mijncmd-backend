@@ -10,12 +10,12 @@ defmodule Mijncmd.Post do
 
   schema "posts" do
     field :title, :string
-    field :subtitle, :string
+    # field :subtitle, :string
 
     field :slug, :string
     field :guid, :string
 
-    field :image, Files.Image.Type
+    # field :image, Files.Image.Type
 
     field :body, :string
     field :description, :string
@@ -66,13 +66,20 @@ defmodule Mijncmd.Post do
     |> validate_required([:body])
   end
 
+  def published(query \\ __MODULE__),
+    do: from(q in query, where: q.published, where: q.published_at <= ^Timex.now())
+
   def preload_all(post) do
     post
     |> preload_author()
+    |> preload_skills()
   end
 
   def preload_author(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :author)
   def preload_author(post), do: Repo.preload(post, :author)
+
+  def preload_skills(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :skills)
+  def preload_skills(post), do: Repo.preload(post, :skills)
 
   defp validate_published_has_published_at(changeset) do
     published = get_field(changeset, :published)
