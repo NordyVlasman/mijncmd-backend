@@ -1,5 +1,6 @@
 defmodule MijncmdWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :mijncmd
+  use Absinthe.Phoenix.Endpoint
 
   # The session will be stored in the cookie and signed,
   # this means its contents can be read but not tampered with.
@@ -42,5 +43,6 @@ defmodule MijncmdWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
+  plug CORSPlug
   plug MijncmdWeb.Router
 end

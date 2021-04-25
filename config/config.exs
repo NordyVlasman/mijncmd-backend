@@ -10,6 +10,13 @@ use Mix.Config
 config :mijncmd,
   ecto_repos: [Mijncmd.Repo]
 
+config :mijncmd, Mijncmd.Guardian,
+  issuer: "mijncmd",
+  verify_issuer: true,
+  secret_key: "x8Hm9S7RQnZy/3CzmOTidj3J5BE45pJWMKvXlGrIloQapFB7LpWh42DcR8wsMZBU93Q=",
+  ttl: {3, :days}
+
+
 # Configures the endpoint
 config :mijncmd, MijncmdWeb.Endpoint,
   url: [host: "localhost"],
@@ -22,6 +29,9 @@ config :mijncmd, MijncmdWeb.Endpoint,
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
+
+config :mijncmd, :arc,
+  storage_dir: "priv/uploads"
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
