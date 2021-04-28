@@ -1,7 +1,6 @@
 defmodule MijncmdWeb.Mutations.Post do
   alias Mijncmd.{
-    Posts.CreatePost,
-    Accounts.User
+    Posts.CreatePost
   }
 
   def create_post(args, %{context: %{current_user: user}}) do

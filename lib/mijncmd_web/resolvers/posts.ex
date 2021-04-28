@@ -37,7 +37,36 @@ defmodule MijncmdWeb.Resolvers.Posts do
       Post.published()
       |> Post.preload_all()
       |> Repo.all()
-      # IO.puts(posts)
+      |> Enum.map(fn post ->
+        author = User.map_user_avatar_url(post.author)
+        Map.merge(post, %{author: author})
+      end)
+    {:ok, posts}
+  end
+
+  def getPosts(_, _args, %{
+    context: %{current_user: current_user}
+  }) do
+
+    query =
+      from(post in Mijncmd.Post,
+        join: post_author in assoc(post, :author),
+        preload: [author: post_author],
+        order_by: [desc: post.inserted_at]
+      )
+
+    posts =
+      Repo.all(query)
+      |> Enum.map(fn post ->
+        post_author =
+          if post.author_id == current_user.id,
+            do: User.map_user_avatar_url(current_user),
+            else: User.map_user_avatar_url(post.user)
+
+        Map.merge(post, %{
+          author: post_author
+        })
+      end)
     {:ok, posts}
   end
 end

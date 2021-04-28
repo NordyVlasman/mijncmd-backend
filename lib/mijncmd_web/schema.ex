@@ -4,6 +4,9 @@ defmodule MijncmdWeb.Schema do
   use Absinthe.Schema
 
   alias MijncmdWeb.Data
+  alias Mijncmd.{
+    Accounts.User
+  }
 
   import_types MijncmdWeb.Schema.Objects
   import_types MijncmdWeb.Schema.Mutations
@@ -25,13 +28,18 @@ defmodule MijncmdWeb.Schema do
     @desc "The current authenticated user."
     field :get_user, :user do
       resolve(fn _, %{context: %{current_user: current_user}} ->
-        {:ok, current_user}
+        {:ok, User.map_user_avatar_url(current_user)}
       end)
     end
 
     @desc "All the posts"
     field :get_posts, list_of(:post) do
-      resolve &MijncmdWeb.Resolvers.Posts.list_posts/3
+      resolve &MijncmdWeb.Resolvers.Posts.getPosts/3
+    end
+
+    @desc "Feed of all the posts"
+    field :get_feed, list_of(:feed_item) do
+      resolve &MijncmdWeb.Resolvers.Feed.list_feed/3
     end
   end
 
@@ -46,6 +54,7 @@ defmodule MijncmdWeb.Schema do
       arg :email, non_null(:string)
       arg :password, non_null(:string)
       arg :name, non_null(:string)
+      arg :handle, :string
       arg :website_url, :string
       arg :github_url, :string
       arg :dribbble_url, :string

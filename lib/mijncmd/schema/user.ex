@@ -1,6 +1,7 @@
 defmodule Mijncmd.Accounts.User do
   use Mijncmd.Schema
   import Ecto.Changeset
+  use Arc.Ecto.Schema
 
   alias Mijncmd.{
     UserSkill,
@@ -8,13 +9,15 @@ defmodule Mijncmd.Accounts.User do
     Accounts.User,
     Repo,
     Files,
-    Regexp
+    Regexp,
+    Uploaders.Image
   }
 
   @derive {Inspect, except: [:password]}
   schema "users" do
     field :email, :string
     field :name, :string
+    field :handle, :string
 
     field :website_url, :string
     field :github_url, :string
@@ -24,8 +27,7 @@ defmodule Mijncmd.Accounts.User do
     field :hashed_password, :string
     field :confirmed_at, :naive_datetime
 
-    # field :avatar, Files.Image.Type
-    field :avatar, :string
+    field :avatar, Image.Type
 
     has_many :user_skills, UserSkill, on_delete: :delete_all
     has_many :posts, Post, foreign_key: :author_id, on_delete: :delete_all
@@ -33,19 +35,20 @@ defmodule Mijncmd.Accounts.User do
     timestamps()
   end
 
-  @required_fields ~w(email password name)a
+  @required_fields ~w(email password name handle)a
   @optional_fields ~w(website_url github_url dribbble_url avatar)a
 
   def registration_changeset(user, attrs, opts \\ []) do
     user
     |> cast(attrs, @required_fields ++ @optional_fields)
+    |> cast_attachments(attrs, [:avatar])
     |> validate_email()
     |> validate_password(opts)
   end
 
   def insert_changeset(user, attrs \\ %{}) do
     allowed =
-      ~w(email name website_url github_url dribbble_url)a
+      ~w(email name website_url github_url dribbble_url avatar handle)a
     changeset_with_allowed_attrs(user, attrs, allowed)
   end
   def file_changeset(user, attrs \\ %{}),
@@ -55,6 +58,15 @@ defmodule Mijncmd.Accounts.User do
     user
     |> insert_changeset(attrs)
     |> file_changeset(attrs)
+  end
+
+  def map_user_avatar_url(user) do
+    if user.avatar do
+      avatar_url = Image.url({user.avatar, user}, :thumb, signed: true)
+      Map.merge(user, %{avatar_url: avatar_url})
+    else
+      user
+    end
   end
 
   defp validate_email(changeset) do
@@ -89,6 +101,9 @@ defmodule Mijncmd.Accounts.User do
   def find(id) do
     Repo.get(User, id)
   end
+
+  def with_handles(query \\ __MODULE__, handles),
+    do: from(q in query, where: q.handle in ^handles)
 
   @doc """
   A user changeset for changing the email.
