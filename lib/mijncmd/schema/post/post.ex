@@ -5,7 +5,8 @@ defmodule Mijncmd.Post do
     Files,
     Accounts.User,
     Regexp,
-    PostSkill
+    PostSkill,
+    FeedItem
   }
 
   schema "posts" do
@@ -27,6 +28,8 @@ defmodule Mijncmd.Post do
 
     has_many :post_skills, PostSkill, on_delete: :delete_all
     has_many :skills, through: [:post_skills, :skill]
+
+    field :feed_item, :map, virtual: true
 
     timestamps()
   end
@@ -75,11 +78,26 @@ defmodule Mijncmd.Post do
     |> preload_skills()
   end
 
+  @spec preload_author(nil | [%{optional(atom) => any}] | map) ::
+          nil | [%{optional(atom) => any}] | %{optional(atom) => any}
   def preload_author(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :author)
   def preload_author(post), do: Repo.preload(post, :author)
 
   def preload_skills(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :skills)
   def preload_skills(post), do: Repo.preload(post, :skills)
+
+  def get_feed_item(post) do
+    post
+    |> FeedItem.with_post()
+    |> Repo.one()
+  end
+
+  def load_feed_item(post) do
+    item = post |> get_feed_item() |> FeedItem.load_object(post)
+    Map.put(post, :feed_item, item)
+  end
+
+  def object_id(post), do: "posts:#{post.slug}"
 
   defp validate_published_has_published_at(changeset) do
     published = get_field(changeset, :published)

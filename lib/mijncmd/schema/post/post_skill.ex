@@ -7,6 +7,7 @@ defmodule Mijncmd.PostSkill do
   }
 
   schema "post_skills" do
+    field :position, :integer
     field :delete, :boolean, virtual: true
 
     belongs_to :post, Post
@@ -17,7 +18,8 @@ defmodule Mijncmd.PostSkill do
 
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, ~w(post_id skill_id)a)
+    |> cast(params, ~w(position post_id skill_id delete)a)
+    |> validate_required([:position])
     |> foreign_key_constraint(:post_id)
     |> foreign_key_constraint(:skill_id)
     |> mark_for_deletion()

@@ -53,8 +53,12 @@ defmodule Mijncmd.MixProject do
       {:hashids, "~> 2.0"},
       {:ecto_enum, "~> 1.0"},
       {:timex, "~> 3.0"},
-      {:arc_ecto, "~> 0.11.1"},
-      {:dataloader, "1.0.4"}
+      {:dataloader, "1.0.4"},
+      {:poison, "~> 3.1"},
+      {:arc, "~> 0.11.0"},
+      {:arc_ecto, "~> 0.11.0"},
+      {:waffle, "1.1.4"},
+      {:waffle_ecto, "0.0.10"}
     ]
   end
 

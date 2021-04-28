@@ -7,6 +7,7 @@ defmodule Mijncmd.Repo.Migrations.CreateUsers do
     create table(:users) do
       add :name, :string, null: false
       add :email, :citext, null: false
+      add :handle, :string, null: false
 
       add :avatar, :string
 

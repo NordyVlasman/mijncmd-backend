@@ -3,6 +3,7 @@ defmodule Mijncmd.Repo.Migrations.CreatePostSkills do
 
   def change do
     create table(:post_skills) do
+      add :position, :integer
       add :post_id, references(:posts, on_delete: :delete_all)
       add :skill_id, references(:skills, on_delete: :delete_all)
 
