@@ -6,7 +6,8 @@ defmodule Mijncmd.Post do
     Accounts.User,
     Regexp,
     PostSkill,
-    FeedItem
+    FeedItem,
+    Uploaders.Image
   }
 
   schema "posts" do
@@ -15,6 +16,8 @@ defmodule Mijncmd.Post do
 
     field :slug, :string
     field :guid, :string
+
+    field :cover, Image.Type
 
     # field :image, Files.Image.Type
 

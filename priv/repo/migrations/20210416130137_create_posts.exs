@@ -8,6 +8,8 @@ defmodule Mijncmd.Repo.Migrations.CreatePosts do
       add :title, :string, null: false
       add :slug, :string, null: false
 
+      add :cover, :string
+
       add :description, :text
       add :body, :text
 
