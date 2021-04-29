@@ -4,8 +4,6 @@ defmodule MijncmdWeb.Resolvers.Feed do
     Repo
   }
 
-  import Ecto.Query
-
   def list_feed(_parent, _args, _resolution) do
     feed =
       FeedItem.feed_only()
