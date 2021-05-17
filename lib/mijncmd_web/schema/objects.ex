@@ -68,6 +68,8 @@ defmodule MijncmdWeb.Schema.Objects do
     field :description, non_null(:string)
     field :body, :string
 
+    field :cover_url, :string
+
     field :skills, list_of(:skill), resolve: dataloader(Data)
     field :author, non_null(:user)
   end

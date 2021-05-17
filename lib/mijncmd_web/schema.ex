@@ -37,6 +37,12 @@ defmodule MijncmdWeb.Schema do
       resolve &MijncmdWeb.Resolvers.Posts.getPosts/3
     end
 
+    @desc "Post By Slug"
+    field :get_post_by_slug, list_of(:post) do
+      arg :slug, non_null(:string)
+      resolve &MijncmdWeb.Resolvers.Posts.get_post/3
+    end
+
     @desc "Feed of all the posts"
     field :get_feed, list_of(:feed_item) do
       resolve &MijncmdWeb.Resolvers.Feed.list_feed/3
@@ -68,6 +74,7 @@ defmodule MijncmdWeb.Schema do
       arg :slug, non_null(:string)
       arg :description, non_null(:string)
       arg :body, non_null(:string)
+      arg :cover, :upload
       resolve &MijncmdWeb.Mutations.Post.create_post/2
     end
 

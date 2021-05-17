@@ -44,29 +44,71 @@ defmodule MijncmdWeb.Resolvers.Posts do
     {:ok, posts}
   end
 
+  def get_post(_, args, %{
+    context: %{current_user: current_user}
+  }) do
+    # post =
+    #   Post
+    #   # |> Post.by_slug(slug: args[:slug])
+    #   |> Repo.get_by(slug: args[:slug])
+    #   |> Post.preload_all()
+      # |> Enum.map(fn post ->
+      #   post_author =
+      #     if post.author_id == current_user.id,
+      #       do: User.map_user_avatar_url(current_user),
+      #       else: User.map_user_avatar_url(post.user)
+
+      #   Map.merge(post, %{
+      #     author: post_author
+      #   })
+      # end)
+      post =
+        Post.by_slug(args[:slug])
+        |> Post.preload_all()
+        |> Repo.all()
+        |> Enum.map(fn post ->
+          author = User.map_user_avatar_url(post.author)
+          Map.merge(post, %{author: author})
+        end)
+      # {:ok, post}
+
+    {:ok, post}
+  end
+
   def getPosts(_, _args, %{
     context: %{current_user: current_user}
   }) do
 
     query =
       from(post in Mijncmd.Post,
-        join: post_author in assoc(post, :author),
-        preload: [author: post_author],
         order_by: [desc: post.inserted_at]
       )
-
     posts =
+      # Post
       Repo.all(query)
+      |> Post.preload_all()
       |> Enum.map(fn post ->
         post_author =
           if post.author_id == current_user.id,
             do: User.map_user_avatar_url(current_user),
             else: User.map_user_avatar_url(post.user)
-
+        post = Post.map_post_cover_url(post)
         Map.merge(post, %{
           author: post_author
         })
       end)
+    # posts =
+    #   Repo.all(query)
+    #   |> Enum.map(fn post ->
+    #     post_author =
+    #       if post.author_id == current_user.id,
+    #         do: User.map_user_avatar_url(current_user),
+    #         else: User.map_user_avatar_url(post.user)
+    #     Post.map_post_cover_url(post)
+    #     Map.merge(post, %{
+    #       author: post_author
+    #     })
+    #   end)
     {:ok, posts}
   end
 end
