@@ -1,4 +1,4 @@
-defmodule Mijncmd.Schema do
+defmodule Mijncmd.Schemas do
   defmacro __using__(_) do
     quote do
       use Ecto.Schema

@@ -18,7 +18,7 @@ defmodule Mijncmd.User do
   end
 
   @required_fields ~w(name email password handle)a
-  @optional_fields ~w(website_url github_url dribbble_url)a
+  @optional_fields ~w(website_url github_url dribbble_url avatar)a
   def create_changeset(model, params) do
     model
     |> cast(params, @required_fields ++ @optional_fields)
@@ -26,4 +26,6 @@ defmodule Mijncmd.User do
     |> update_change(:email, &String.trim/1)
     |> validate_format(:email, ~r/.+@.+/)
   end
+
+  def with_avatar(%User{} = user) when user.avatar, do: Image.url({user.avatar, user}, :thumb, signed: true)
 end

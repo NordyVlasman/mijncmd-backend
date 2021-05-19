@@ -58,7 +58,8 @@ defmodule Mijncmd.MixProject do
       {:arc, "~> 0.11.0"},
       {:arc_ecto, "~> 0.11.0"},
       {:waffle, "1.1.4"},
-      {:waffle_ecto, "0.0.10"}
+      {:waffle_ecto, "0.0.10"},
+      {:canada, "~> 2.0"}
     ]
   end
 
