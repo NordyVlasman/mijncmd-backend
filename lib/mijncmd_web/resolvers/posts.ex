@@ -68,6 +68,7 @@ defmodule MijncmdWeb.Resolvers.Posts do
         |> Repo.all()
         |> Enum.map(fn post ->
           author = User.map_user_avatar_url(post.author)
+          post = Post.map_post_cover_url(post)
           Map.merge(post, %{author: author})
         end)
       # {:ok, post}

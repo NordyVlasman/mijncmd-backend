@@ -10,6 +10,12 @@ defmodule MijncmdWeb.Router do
     plug MijncmdWeb.Context
   end
 
+  scope "/apis", MijncmdWeb do
+    pipe_through :api
+
+    post("/upload/image", ImageController, :create)
+  end
+
   scope "/api" do
     pipe_through :graphql
 
