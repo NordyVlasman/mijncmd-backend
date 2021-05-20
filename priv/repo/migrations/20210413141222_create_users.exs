@@ -24,15 +24,15 @@ defmodule Mijncmd.Repo.Migrations.CreateUsers do
 
     create unique_index(:users, [:email])
 
-    create table(:users_tokens) do
-      add :user_id, references(:users, on_delete: :delete_all), null: false
-      add :token, :binary, null: false
-      add :context, :string, null: false
-      add :sent_to, :string
-      timestamps(updated_at: false)
+    create table(:auth_access_tokens) do
+      add(:token, :string)
+      add(:user_id, references(:users))
+
+      add(:revoked_at, :utc_datetime)
+
+      timestamps()
     end
 
-    create index(:users_tokens, [:user_id])
-    create unique_index(:users_tokens, [:context, :token])
+    create(index(:auth_access_tokens, [:token]))
   end
 end

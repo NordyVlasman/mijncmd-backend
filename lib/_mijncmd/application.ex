@@ -1,34 +1,34 @@
-defmodule Mijncmd.Application do
-  # See https://hexdocs.pm/elixir/Application.html
-  # for more information on OTP Applications
-  @moduledoc false
+# defmodule Mijncmd.Application do
+#   # See https://hexdocs.pm/elixir/Application.html
+#   # for more information on OTP Applications
+#   @moduledoc false
 
-  use Application
+#   use Application
 
-  def start(_type, _args) do
-    children = [
-      # Start the Ecto repository
-      Mijncmd.Repo,
-      # Start the Telemetry supervisor
-      MijncmdWeb.Telemetry,
-      # Start the PubSub system
-      {Phoenix.PubSub, name: Mijncmd.PubSub},
-      # Start the Endpoint (http/https)
-      MijncmdWeb.Endpoint
-      # Start a worker by calling: Mijncmd.Worker.start_link(arg)
-      # {Mijncmd.Worker, arg}
-    ]
+#   def start(_type, _args) do
+#     children = [
+#       # Start the Ecto repository
+#       Mijncmd.Repo,
+#       # Start the Telemetry supervisor
+#       MijncmdWeb.Telemetry,
+#       # Start the PubSub system
+#       {Phoenix.PubSub, name: Mijncmd.PubSub},
+#       # Start the Endpoint (http/https)
+#       MijncmdWeb.Endpoint
+#       # Start a worker by calling: Mijncmd.Worker.start_link(arg)
+#       # {Mijncmd.Worker, arg}
+#     ]
 
-    # See https://hexdocs.pm/elixir/Supervisor.html
-    # for other strategies and supported options
-    opts = [strategy: :one_for_one, name: Mijncmd.Supervisor]
-    Supervisor.start_link(children, opts)
-  end
+#     # See https://hexdocs.pm/elixir/Supervisor.html
+#     # for other strategies and supported options
+#     opts = [strategy: :one_for_one, name: Mijncmd.Supervisor]
+#     Supervisor.start_link(children, opts)
+#   end
 
-  # Tell Phoenix to update the endpoint configuration
-  # whenever the application is updated.
-  def config_change(changed, _new, removed) do
-    MijncmdWeb.Endpoint.config_change(changed, removed)
-    :ok
-  end
-end
+#   # Tell Phoenix to update the endpoint configuration
+#   # whenever the application is updated.
+#   def config_change(changed, _new, removed) do
+#     MijncmdWeb.Endpoint.config_change(changed, removed)
+#     :ok
+#   end
+# end

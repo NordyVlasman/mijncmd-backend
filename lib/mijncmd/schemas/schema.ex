@@ -4,11 +4,11 @@ defmodule Mijncmd.Schema do
       use Ecto.Schema
 
       @type t :: struct
-      @foreign_key_type :binary_id
       @timestamps_opts [type: :utc_datetime_usec]
 
       import Ecto
       import Ecto.Changeset
+      import Ecto.Query
     end
   end
 end

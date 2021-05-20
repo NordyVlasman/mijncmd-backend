@@ -4,17 +4,26 @@ defmodule Mijncmd.GraphQL.Schema do
   alias Mijncmd.Repo
 
   # Scalars
+  import_types(Absinthe.Plug.Types)
+
   import_types(Mijncmd.GraphQL.DatetimeScalar)
 
   import_types(Mijncmd.GraphQL.Types.User)
+  import_types(Mijncmd.GraphQL.Types.Post)
   import_types(Mijncmd.GraphQL.Types.MutationResult)
 
   query do
-
+    field :user, :user do
+      resolve(&Mijncmd.GraphQL.Resolvers.User.current_user/3)
+    end
   end
 
   mutation do
+    import_types(Mijncmd.GraphQL.Mutations.User)
+    import_types(Mijncmd.GraphQL.Mutations.Post)
 
+    import_fields(:user_mutations)
+    import_fields(:post_mutations)
   end
 
   def context(absinthe_context) do

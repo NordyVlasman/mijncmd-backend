@@ -3,6 +3,10 @@ defmodule Mijncmd.GraphQL.Types.User do
 
   import Mijncmd.GraphQL.Helpers.Fields
 
+  alias Mijncmd.{
+    User
+  }
+
   object :user do
     field(:id, non_null(:id))
     field(:name, non_null(:string))

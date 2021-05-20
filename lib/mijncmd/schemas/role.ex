@@ -15,7 +15,7 @@ defmodule Mijncmd.Role do
     iex > Mijncmd.Role.slugs()
     ["admin", "student", "teacher"]
   """
-  defmacro slugs, do: Enum.map(@all, &Map.get(&a, :slug))
+  defmacro slugs, do: Enum.map(@all, &Map.get(&1, :slug))
 
   @doc """
   ## Examples

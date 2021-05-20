@@ -1,140 +1,140 @@
-defmodule Mijncmd.Post do
-  use Mijncmd.Schema, default_sort: :published_at
+# defmodule Mijncmd.Post do
+#   use Mijncmd.Schema, default_sort: :published_at
 
-  alias Mijncmd.{
-    Files,
-    Accounts.User,
-    Regexp,
-    PostSkill,
-    FeedItem,
-    Uploaders.Image,
-    Post
-  }
+#   alias Mijncmd.{
+#     Files,
+#     Accounts.User,
+#     Regexp,
+#     PostSkill,
+#     FeedItem,
+#     Uploaders.Image,
+#     Post
+#   }
 
-  schema "posts" do
-    field :title, :string
-    # field :subtitle, :string
+#   schema "posts" do
+#     field :title, :string
+#     # field :subtitle, :string
 
-    field :slug, :string
-    field :guid, :string
+#     field :slug, :string
+#     field :guid, :string
 
-    field :cover, Image.Type
+#     field :cover, Image.Type
 
-    # field :image, Files.Image.Type
+#     # field :image, Files.Image.Type
 
-    field :body, :string
-    field :description, :string
+#     field :body, :string
+#     field :description, :string
 
-    field :published, :boolean, default: false
-    field :published_at, :utc_datetime
+#     field :published, :boolean, default: false
+#     field :published_at, :utc_datetime
 
-    belongs_to :author, User
+#     belongs_to :author, User
 
-    has_many :post_skills, PostSkill, on_delete: :delete_all
-    has_many :skills, through: [:post_skills, :skill]
+#     has_many :post_skills, PostSkill, on_delete: :delete_all
+#     has_many :skills, through: [:post_skills, :skill]
 
-    field :feed_item, :map, virtual: true
+#     field :feed_item, :map, virtual: true
 
-    timestamps()
-  end
+#     timestamps()
+#   end
 
-  def file_changeset(post, attrs \\ %{}),
-    do: cast_attachments(post, attrs, [:cover], allow_urls: true)
+#   def file_changeset(post, attrs \\ %{}),
+#     do: cast_attachments(post, attrs, [:cover], allow_urls: true)
 
-  def insert_changeset(post, attrs \\ %{}) do
-    post
-    |> cast(
-      attrs,
-      ~w(title subtitle slug description author_id published published_at body cover)a
-    )
-    |> validate_required([:title, :author_id])
-    |> cast_attachments(attrs, [:cover])
-    |> validate_format(:slug, Regexp.slug(), message: Regexp.slug_message())
-    |> unique_constraint(:slug)
-    |> foreign_key_constraint(:author_id)
-    |> validate_published_has_published_at()
-    |> cast_assoc(:post_skills)
-  end
+#   def insert_changeset(post, attrs \\ %{}) do
+#     post
+#     |> cast(
+#       attrs,
+#       ~w(title subtitle slug description author_id published published_at body cover)a
+#     )
+#     |> validate_required([:title, :author_id])
+#     |> cast_attachments(attrs, [:cover])
+#     |> validate_format(:slug, Regexp.slug(), message: Regexp.slug_message())
+#     |> unique_constraint(:slug)
+#     |> foreign_key_constraint(:author_id)
+#     |> validate_published_has_published_at()
+#     |> cast_assoc(:post_skills)
+#   end
 
-  def map_post_cover_url(post) do
-    if post.cover do
-      cover_url = Image.url({post.cover, post}, :original, signed: true)
-      Map.merge(post, %{cover_url: cover_url})
-    else
-      post
-    end
-  end
+#   def map_post_cover_url(post) do
+#     if post.cover do
+#       cover_url = Image.url({post.cover, post}, :original, signed: true)
+#       Map.merge(post, %{cover_url: cover_url})
+#     else
+#       post
+#     end
+#   end
 
-  def update_changeset(post, attrs \\ %{}) do
-    post
-    |> insert_changeset(attrs)
-    |> file_changeset(attrs)
-  end
+#   def update_changeset(post, attrs \\ %{}) do
+#     post
+#     |> insert_changeset(attrs)
+#     |> file_changeset(attrs)
+#   end
 
-  def user_changeset(struct, attrs \\ %{}) do
-    struct
-    |> cast(attrs, [
-      :author_id,
-      :title,
-      :slug,
-      :description,
-      :body,
-      :cover
-    ])
-    |> cast_attachments(attrs, [:cover])
-    # |> file_changeset(attrs)
-    |> validate_required([:body])
-  end
+#   def user_changeset(struct, attrs \\ %{}) do
+#     struct
+#     |> cast(attrs, [
+#       :author_id,
+#       :title,
+#       :slug,
+#       :description,
+#       :body,
+#       :cover
+#     ])
+#     |> cast_attachments(attrs, [:cover])
+#     # |> file_changeset(attrs)
+#     |> validate_required([:body])
+#   end
 
-  def published(query \\ __MODULE__),
-    do: from(q in query, where: q.published, where: q.published_at <= ^Timex.now())
+#   def published(query \\ __MODULE__),
+#     do: from(q in query, where: q.published, where: q.published_at <= ^Timex.now())
 
-  def by_slug(query \\ __MODULE__, slug),
-    do: from(q in query, where: q.slug == ^slug)
-  def preload_all(post) do
-    post
-    |> preload_author()
-    |> preload_skills()
-  end
+#   def by_slug(query \\ __MODULE__, slug),
+#     do: from(q in query, where: q.slug == ^slug)
+#   def preload_all(post) do
+#     post
+#     |> preload_author()
+#     |> preload_skills()
+#   end
 
-  @spec preload_author(nil | [%{optional(atom) => any}] | map) ::
-          nil | [%{optional(atom) => any}] | %{optional(atom) => any}
-  def preload_author(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :author)
-  def preload_author(post), do: Repo.preload(post, :author)
+#   @spec preload_author(nil | [%{optional(atom) => any}] | map) ::
+#           nil | [%{optional(atom) => any}] | %{optional(atom) => any}
+#   def preload_author(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :author)
+#   def preload_author(post), do: Repo.preload(post, :author)
 
-  def preload_skills(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :skills)
-  def preload_skills(post), do: Repo.preload(post, :skills)
+#   def preload_skills(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :skills)
+#   def preload_skills(post), do: Repo.preload(post, :skills)
 
-  def get_feed_item(post) do
-    post
-    |> FeedItem.with_post()
-    |> Repo.one()
-  end
+#   def get_feed_item(post) do
+#     post
+#     |> FeedItem.with_post()
+#     |> Repo.one()
+#   end
 
-  def load_feed_item(post) do
-    item = post |> get_feed_item() |> FeedItem.load_object(post)
-    Map.put(post, :feed_item, item)
-  end
+#   def load_feed_item(post) do
+#     item = post |> get_feed_item() |> FeedItem.load_object(post)
+#     Map.put(post, :feed_item, item)
+#   end
 
-  def object_id(post), do: "posts:#{post.slug}"
+#   def object_id(post), do: "posts:#{post.slug}"
 
-  def find(slug) do
-    case Repo.get_by(Post, slug: slug) do
-      %Post{} = post ->
-        {:ok, post}
-      _ ->
-        {:error, "Failed"}
-    end
-  end
+#   def find(slug) do
+#     case Repo.get_by(Post, slug: slug) do
+#       %Post{} = post ->
+#         {:ok, post}
+#       _ ->
+#         {:error, "Failed"}
+#     end
+#   end
 
-  defp validate_published_has_published_at(changeset) do
-    published = get_field(changeset, :published)
-    published_at = get_field(changeset, :published_at)
+#   defp validate_published_has_published_at(changeset) do
+#     published = get_field(changeset, :published)
+#     published_at = get_field(changeset, :published_at)
 
-    if published && is_nil(published_at) do
-      add_error(changeset, :published_at, "can't be blank when published")
-    else
-      changeset
-    end
-  end
-end
+#     if published && is_nil(published_at) do
+#       add_error(changeset, :published_at, "can't be blank when published")
+#     else
+#       changeset
+#     end
+#   end
+# end
