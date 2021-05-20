@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="hashids" type="mix">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/_build/dev/lib/hashids/ebin" />
+      <root url="file://$PROJECT_DIR$/_build/dev/lib/hashids/ebin" />
+      <root url="file://$PROJECT_DIR$/_build/dev/lib/hashids/ebin" />
+      <root url="file://$PROJECT_DIR$/_build/dev/lib/hashids/ebin" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/deps/hashids/lib" />
+      <root url="file://$PROJECT_DIR$/deps/hashids/lib" />
+    </SOURCES>
+  </library>
+</component>

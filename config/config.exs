@@ -7,6 +7,8 @@
 # General application configuration
 use Mix.Config
 
+version = Mix.Project.config()[:version]
+
 config :mijncmd,
   ecto_repos: [Mijncmd.Repo]
 
@@ -35,6 +37,11 @@ config :arc,
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
+
+config :sentry,
+  included_environments: [:prod],
+  root_source_code_path: File.cwd!(),
+  release: version
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
