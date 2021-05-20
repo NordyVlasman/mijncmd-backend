@@ -7,7 +7,7 @@ defmodule Mijncmd.MixProject do
       version: "0.1.0",
       elixir: "~> 1.7",
       elixirc_paths: elixirc_paths(Mix.env()),
-      compilers: [:phoenix, :gettext] ++ Mix.compilers(),
+      compilers: extra_compilers(Mix.env()) ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps()
@@ -19,14 +19,18 @@ defmodule Mijncmd.MixProject do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {Mijncmd.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      mod: {Mijncmd, []},
+      extra_applications: [:logger, :runtime_tools, :canada]
     ]
   end
 
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "test/support"]
   defp elixirc_paths(_), do: ["lib"]
+
+  # Specifies wich paths to compile per environment
+  defp extra_compilers(:prod), do: [:phoenix]
+  defp extra_compilers(_), do: [:phoenix]
 
   # Specifies your project dependencies.
   #
@@ -58,7 +62,9 @@ defmodule Mijncmd.MixProject do
       {:arc, "~> 0.11.0"},
       {:arc_ecto, "~> 0.11.0"},
       {:waffle, "1.1.4"},
-      {:waffle_ecto, "0.0.10"}
+      {:waffle_ecto, "0.0.10"},
+      {:canada, "~> 2.0"},
+      {:sentry, "~> 8.0"},
     ]
   end
 

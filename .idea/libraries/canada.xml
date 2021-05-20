@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="canada" type="mix">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/_build/dev/lib/canada/ebin" />
+      <root url="file://$PROJECT_DIR$/_build/dev/lib/canada/ebin" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/deps/canada/lib" />
+      <root url="file://$PROJECT_DIR$/deps/canada/lib" />
+    </SOURCES>
+  </library>
+</component>
