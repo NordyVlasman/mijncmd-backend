@@ -5,7 +5,9 @@ defmodule Mijncmd.Post do
   alias Mijncmd.{
     User,
     Post,
-    Files.Image
+    Files.Image,
+    PostSkill,
+    Skill
   }
 
   schema "posts" do
@@ -23,11 +25,13 @@ defmodule Mijncmd.Post do
     timestamps()
   end
 
-  @required_fields ~w(title slug description author_id body cover)a
+  @required_fields ~w(title slug author_id body)a
+  @optional_fields ~w(cover description)a
   def create_changeset(model, params) do
     model
-    |> cast(params, @required_fields)
+    |> cast(params, @required_fields ++ @optional_fields)
     |> cast_attachments(params, [:cover])
+    |> validate_required(@required_fields)
     |> unique_constraint(:slug)
     |> foreign_key_constraint(:author_id)
     |> cast_assoc(:post_skills)
