@@ -16,6 +16,10 @@ defmodule Mijncmd.GraphQL.Schema do
     field :user, :user do
       resolve(&Mijncmd.GraphQL.Resolvers.User.current_user/3)
     end
+
+    field :posts, list_of(:post) do
+      resolve(&Mijncmd.GraphQL.Resolvers.Post.get_posts/3)
+    end
   end
 
   mutation do

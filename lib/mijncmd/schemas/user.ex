@@ -24,6 +24,9 @@ defmodule Mijncmd.User do
     field(:confirmed_at, :naive_datetime)
 
     has_many(:access_tokens, Mijncmd.AccessToken)
+    has_many(:posts, Mijncmd.Post)
+
+    many_to_many(:likes, Mijncmd.Post, join_through: "post_likes", on_replace: :delete, on_delete: :delete_all)
 
     timestamps()
   end

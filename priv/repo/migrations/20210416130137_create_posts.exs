@@ -3,8 +3,6 @@ defmodule Mijncmd.Repo.Migrations.CreatePosts do
 
   def change do
     create table(:posts) do
-      add :guid, :string
-
       add :title, :string, null: false
       add :slug, :string, null: false
 
@@ -13,11 +11,12 @@ defmodule Mijncmd.Repo.Migrations.CreatePosts do
       add :description, :text
       add :body, :text
 
+      add :likes_count, :integer, default: 0
+
       add :published, :boolean, default: false
       add :published_at, :naive_datetime
 
       add :author_id, references(:users), on_delete: :nilify_all
-
       timestamps()
     end
 

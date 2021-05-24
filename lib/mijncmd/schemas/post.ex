@@ -7,7 +7,8 @@ defmodule Mijncmd.Post do
     Post,
     Files.Image,
     PostSkill,
-    Skill
+    Skill,
+    Repo
   }
 
   schema "posts" do
@@ -20,13 +21,17 @@ defmodule Mijncmd.Post do
 
     has_many(:post_skills, PostSkill, on_delete: :delete_all)
     has_many(:skills, through: [:post_skills, :skill])
+    has_many(:likes, {"post_likes", Mijncmd.PostLike})
+
+    field(:likes_count, :integer, default: 0)
+
     belongs_to(:author, User)
 
     timestamps()
   end
 
   @required_fields ~w(title slug author_id body)a
-  @optional_fields ~w(cover description)a
+  @optional_fields ~w(cover description likes_count)a
   def create_changeset(model, params) do
     model
     |> cast(params, @required_fields ++ @optional_fields)
@@ -35,6 +40,11 @@ defmodule Mijncmd.Post do
     |> unique_constraint(:slug)
     |> foreign_key_constraint(:author_id)
     |> cast_assoc(:post_skills)
+  end
+
+  def update_changeset(model, params) do
+    model
+    |> cast(params, @optional_fields ++ @required_fields)
   end
 
   ## Functions
