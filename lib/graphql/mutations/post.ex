@@ -13,5 +13,17 @@ defmodule Mijncmd.GraphQL.Mutations.Post do
 
       resolve(&PostResolver.create_post/3)
     end
+
+    field :like_post, :mutated_post do
+      arg(:post_id, non_null(:id))
+
+      resolve(&PostResolver.like_post/3)
+    end
+
+    field :dislike_post, :mutated_post do
+      arg(:post_id, non_null(:id))
+
+      resolve(&PostResolver.dislike_post/3)
+    end
   end
 end
