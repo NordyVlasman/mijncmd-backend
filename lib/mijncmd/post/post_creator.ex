@@ -44,6 +44,8 @@ defmodule Mijncmd.PostCreate do
           |> PostLike.create_changeset(params)
           |> Repo.insert()
 
+          post = Repo.get(Post, params.post_id)
+
           {:ok, post}
         1 ->
           {:ok, post}
@@ -69,6 +71,7 @@ defmodule Mijncmd.PostCreate do
           |> Repo.update()
 
           exists_query |> Repo.delete_all
+          post = Repo.get(Post, params.post_id)
 
           {:ok, post}
         0 ->

@@ -23,7 +23,13 @@ defmodule Mijncmd.GraphQL.Types.Post do
       end)
     end
 
-    field :author, non_null(:user)
+    field :author, non_null(:user) do
+      resolve(fn post, _, _ ->
+        post = post
+        |> Post.preload_author()
+        {:ok, post.author}
+      end)
+    end
 
     field :has_liked, :boolean do
       resolve(fn post, _, info ->

@@ -17,12 +17,10 @@ defmodule Mijncmd.GraphQL.Resolvers.Post do
     end
   end
 
-  def get_posts(_, _, info) do
-    user = info.context[:conn].assigns[:current_user]
+  def get_posts(_, _, _) do
     posts =
       Post
       |> Repo.all()
-      |> Post.preload_author()
     {:ok, posts}
   end
 
