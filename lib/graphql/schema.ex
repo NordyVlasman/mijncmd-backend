@@ -11,6 +11,7 @@ defmodule Mijncmd.GraphQL.Schema do
   import_types(Mijncmd.GraphQL.Types.User)
   import_types(Mijncmd.GraphQL.Types.Post)
   import_types(Mijncmd.GraphQL.Types.Skill)
+  import_types(Mijncmd.GraphQL.Types.Comment)
   import_types(Mijncmd.GraphQL.Types.MutationResult)
 
   query do

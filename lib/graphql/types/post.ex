@@ -29,6 +29,16 @@ defmodule Mijncmd.GraphQL.Types.Post do
         |> Post.preload_author()
         {:ok, post.author}
       end)
+
+    end
+
+    field :comments, list_of(:comment) do
+      resolve(fn post, _, _ ->
+        post = post
+        |> Post.preload_comments()
+        comments = Mijncmd.PostComment.nested(post.comments)
+        {:ok, comments}
+      end)
     end
 
     field :has_liked, :boolean do
