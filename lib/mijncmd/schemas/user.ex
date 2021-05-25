@@ -44,8 +44,14 @@ defmodule Mijncmd.User do
   end
 
   # Functions
-  def with_avatar(%User{} = user) when user.avatar, do: Image.url({user.avatar, user}, :thumb, signed: true)
-  def with_avatar(%User{} = user) when user.avatar == nil, do: nil
+  def map_user_avatar_url(user) do
+    if user.avatar do
+      avatar_url = Image.url({user.avatar, user}, :thumb, signed: true)
+      Map.merge(user, %{avatar_url: avatar_url})
+    else
+      user
+    end
+  end
 
   defp maybe_hash_password(changeset) do
     password = get_change(changeset, :password)

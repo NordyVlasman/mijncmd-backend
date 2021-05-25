@@ -18,7 +18,10 @@ defmodule Mijncmd.GraphQL.Types.User do
     field(:dribbble_url, :string)
 
     field :avatar_url, :string do
-      resolve(fn user, _, _ -> {:ok, User.with_avatar(user)} end)
+      resolve(fn user, _, _ ->
+        user = User.map_user_avatar_url(user)
+        {:ok, user.avatar_url}
+      end)
     end
   end
 end

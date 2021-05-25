@@ -19,7 +19,8 @@ defmodule Mijncmd.GraphQL.Types.Post do
 
     field :cover_url, :string do
       resolve(fn post, _, _ ->
-        {:ok, Post.with_cover(post)}
+        post = Post.map_post_cover_url(post)
+        {:ok, post.cover_url}
       end)
     end
 

@@ -49,8 +49,14 @@ defmodule Mijncmd.Post do
   end
 
   ## Functions
-  def with_cover(%Post{} = post) when post.cover, do: Image.url({post.cover, post}, :original, signed: true)
-
+  def map_post_cover_url(post) do
+    if post.cover do
+      cover_url = Image.url({post.cover, post}, :original, signed: true)
+      Map.merge(post, %{cover_url: cover_url})
+    else
+      post
+    end
+  end
   ## Preloading
   def preload_author(%Ecto.Query{} = query), do: Ecto.Query.preload(query, :author)
   def preload_author(post), do: Repo.preload(post, :author)
