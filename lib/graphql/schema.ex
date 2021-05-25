@@ -23,6 +23,11 @@ defmodule Mijncmd.GraphQL.Schema do
       resolve(&Mijncmd.GraphQL.Resolvers.Post.get_posts/3)
     end
 
+    field :post_slug, :post do
+      arg :slug, :string
+      resolve(&Mijncmd.GraphQL.Resolvers.Post.get_post/3)
+    end
+
     field :skills, list_of(:skill) do
       resolve(&Mijncmd.GraphQL.Resolvers.Skill.get_skills/3)
     end

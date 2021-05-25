@@ -20,7 +20,7 @@ defmodule Mijncmd.PostComment do
     timestamps()
   end
 
-  @required_fields ~w(user_id post_id content)a
+  @required_fields ~w(author_id post_id content)a
   @optional_fields ~w(parent_id)a
   def create_changeset(model, params) do
     model
