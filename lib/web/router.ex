@@ -26,6 +26,7 @@ defmodule Mijncmd.Router do
   scope "/" do
     pipe_through(:browser)
 
+    get("/", Mijncmd.WebAppController, :index)
     post("/upload/image", Mijncmd.ImageController, :create)
   end
 end
