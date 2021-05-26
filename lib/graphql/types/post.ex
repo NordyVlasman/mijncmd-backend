@@ -24,6 +24,14 @@ defmodule Mijncmd.GraphQL.Types.Post do
       end)
     end
 
+    field :skills, list_of(:skill) do
+      resolve(fn post, _, _ ->
+        post = post
+        |> Post.preload_skills()
+        {:ok, post.skills}
+      end)
+    end
+
     field :author, non_null(:user) do
       resolve(fn post, _, _ ->
         post = post

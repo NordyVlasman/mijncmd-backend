@@ -1,5 +1,5 @@
 defmodule Mijncmd.PostCreate do
-  alias Mijncmd.{User, Repo, Post, PostLike}
+  alias Mijncmd.{User, Repo, Post, PostLike, PostSkill}
   import Ecto.Query, warn: false
 
   # ##########################
@@ -18,6 +18,17 @@ defmodule Mijncmd.PostCreate do
     %Post{}
     |> Post.create_changeset(params)
     |> Repo.insert()
+
+    post = Repo.get_by(Post, slug: params.slug)
+
+    Enum.each(params.skills, fn skill ->
+      postSkill = %{post_id: post.id, skill_id: skill}
+      %PostSkill{}
+      |> PostSkill.create_changeset(postSkill)
+      |> Repo.insert()
+    end)
+
+    {:ok, post}
   end
 
   def like(%User{} = user, params) do
