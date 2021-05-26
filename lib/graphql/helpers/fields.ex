@@ -1,4 +1,5 @@
 defmodule Mijncmd.GraphQL.Helpers.Fields do
+  use Absinthe.Schema.Notation
 
   @doc """
   ## Examples

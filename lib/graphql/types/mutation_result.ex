@@ -16,4 +16,9 @@ defmodule Mijncmd.GraphQL.Types.MutationResult do
     field(:access_token, :string)
     field(:errors, list_of(:string))
   end
+
+  object :mutated_comment do
+    field(:comment, :comment)
+    field(:errors, list_of(:string))
+  end
 end

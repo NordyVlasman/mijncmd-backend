@@ -22,6 +22,7 @@ defmodule Mijncmd.Post do
     has_many(:post_skills, PostSkill, on_delete: :delete_all)
     has_many(:skills, through: [:post_skills, :skill])
     has_many(:likes, {"post_likes", Mijncmd.PostLike})
+    has_many(:comments, {"post_comments", Mijncmd.PostComment})
 
     field(:likes_count, :integer, default: 0)
 
@@ -48,12 +49,21 @@ defmodule Mijncmd.Post do
   end
 
   ## Functions
-  def with_cover(%Post{} = post) when post.cover, do: Image.url({post.cover, post}, :original, signed: true)
-
+  def map_post_cover_url(post) do
+    if post.cover do
+      cover_url = Image.url({post.cover, post}, :original, signed: true)
+      Map.merge(post, %{cover_url: cover_url})
+    else
+      post
+    end
+  end
   ## Preloading
   def preload_author(%Ecto.Query{} = query), do: Ecto.Query.preload(query, :author)
   def preload_author(post), do: Repo.preload(post, :author)
 
   def preload_skills(%Ecto.Query{} = query), do: Ecto.Query.preload(query, :skills)
   def preload_skills(post), do: Repo.preload(post, :skills)
+
+  def preload_comments(%Ecto.Query{} = query), do: Ecto.Query.preload(query, :comments)
+  def preload_comments(post), do: Repo.preload(post, :comments)
 end

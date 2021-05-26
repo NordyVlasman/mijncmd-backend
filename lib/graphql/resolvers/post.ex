@@ -24,6 +24,13 @@ defmodule Mijncmd.GraphQL.Resolvers.Post do
     {:ok, posts}
   end
 
+  def get_post(_, params, _) do
+    case Repo.get_by(Post, slug: params.slug) do
+      %Post{} = post ->
+        {:ok, post}
+    end
+  end
+
   def like_post(_, params, info) do
     user = info.context[:conn].assigns[:current_user]
     case PostCreate.like(user, params) do

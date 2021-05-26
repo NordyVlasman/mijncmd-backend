@@ -22,5 +22,6 @@ defmodule Mijncmd.PostSkill do
     |> cast(params, @required_fields)
     |> foreign_key_constraint(:post_id)
     |> foreign_key_constraint(:skill_id)
+    |> cast_assoc(:skill)
   end
 end

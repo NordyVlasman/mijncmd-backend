@@ -19,7 +19,16 @@ defmodule Mijncmd.GraphQL.Types.Post do
 
     field :cover_url, :string do
       resolve(fn post, _, _ ->
-        {:ok, Post.with_cover(post)}
+        post = Post.map_post_cover_url(post)
+        {:ok, post.cover_url}
+      end)
+    end
+
+    field :skills, list_of(:skill) do
+      resolve(fn post, _, _ ->
+        post = post
+        |> Post.preload_skills()
+        {:ok, post.skills}
       end)
     end
 
@@ -28,6 +37,16 @@ defmodule Mijncmd.GraphQL.Types.Post do
         post = post
         |> Post.preload_author()
         {:ok, post.author}
+      end)
+
+    end
+
+    field :comments, list_of(:comment) do
+      resolve(fn post, _, _ ->
+        post = post
+        |> Post.preload_comments()
+        comments = Mijncmd.PostComment.nested(post.comments)
+        {:ok, comments}
       end)
     end
 

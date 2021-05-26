@@ -6,7 +6,11 @@ defmodule Mijncmd.GraphQL.Resolvers.Skill do
     Repo
   }
 
-  def get_skills(_, _, _) do
+  def create_skill(_, _, _) do
+
+  end
+
+  def get_skills(_, params, info) do
     skills =
       Skill
       |> Repo.all()
