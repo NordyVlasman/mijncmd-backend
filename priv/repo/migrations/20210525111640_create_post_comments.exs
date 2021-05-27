@@ -9,6 +9,9 @@ defmodule Mijncmd.Repo.Migrations.CreatePostComments do
       add :parent_id, references(:post_comments)
       add :edited_at, :naive_datetime
       add :deleted_at, :naive_datetime
+
+      add :upvote_count, :integer, default: 0
+
       timestamps()
     end
 

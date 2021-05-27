@@ -12,7 +12,6 @@ defmodule Mijncmd.GraphQL.Types.Post do
     field(:title, non_null(:string))
     field(:slug, non_null(:string))
 
-    field(:description, :string)
     field(:body, :string)
 
     field(:likes_count, :integer)

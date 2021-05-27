@@ -8,11 +8,14 @@ defmodule Mijncmd.PostComment do
   schema "post_comments" do
     field(:content, :string)
 
+    field(:upvote_count, :integer, default: 0)
+
     belongs_to(:author, Mijncmd.User, foreign_key: :author_id)
     belongs_to(:post, Mijncmd.Post, foreign_key: :post_id)
 
     belongs_to(:parent, Mijncmd.PostComment, foreign_key: :parent_id)
-    has_many :children, Mijncmd.PostComment, foreign_key: :parent_id
+    has_many(:children, Mijncmd.PostComment, foreign_key: :parent_id)
+    has_many(:upvotes, {"comment_upvotes", Mijncmd.CommentUpvote})
 
     field :edited_at, :utc_datetime
     field :deleted_at, :utc_datetime
@@ -21,7 +24,7 @@ defmodule Mijncmd.PostComment do
   end
 
   @required_fields ~w(author_id post_id content)a
-  @optional_fields ~w(parent_id)a
+  @optional_fields ~w(parent_id upvote_count)a
   def create_changeset(model, params) do
     model
     |> cast(params, @required_fields ++ @optional_fields)
@@ -34,6 +37,11 @@ defmodule Mijncmd.PostComment do
     |> foreign_key_constraint(:post_id)
     |> foreign_key_constraint(:author_id)
     |> foreign_key_constraint(:parent_id)
+  end
+
+  def update_changeset(model, params) do
+    model
+    |> cast(params, @optional_fields ++ @required_fields)
   end
 
   def with_author(%Mijncmd.PostComment{} = comment), do: Repo.preload(comment, :author)

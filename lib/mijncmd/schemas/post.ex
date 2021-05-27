@@ -14,7 +14,6 @@ defmodule Mijncmd.Post do
   schema "posts" do
     field(:title, :string)
     field(:slug, :string)
-    field(:description, :string)
 
     field(:cover, Image.Type)
     field(:body, :string)
@@ -32,7 +31,7 @@ defmodule Mijncmd.Post do
   end
 
   @required_fields ~w(title slug author_id body)a
-  @optional_fields ~w(cover description likes_count)a
+  @optional_fields ~w(cover likes_count)a
   def create_changeset(model, params) do
     model
     |> cast(params, @required_fields ++ @optional_fields)
