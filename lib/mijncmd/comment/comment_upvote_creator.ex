@@ -20,6 +20,7 @@ defmodule Mijncmd.CommentUpvoteCreate do
 
         new_count = Enum.max([0, cur_count])
         map = Map.put(%{}, :upvote_count, new_count + 1)
+
         params = Map.put(params, :user_id, user.id)
 
         comment

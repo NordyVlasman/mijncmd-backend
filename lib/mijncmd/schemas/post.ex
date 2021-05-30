@@ -4,10 +4,8 @@ defmodule Mijncmd.Post do
 
   alias Mijncmd.{
     User,
-    Post,
     Files.Image,
     PostSkill,
-    Skill,
     Repo
   }
 
