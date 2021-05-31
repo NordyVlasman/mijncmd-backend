@@ -2,7 +2,7 @@ defmodule Mijncmd.Image do
   use Mijncmd.Schema
   use Arc.Ecto.Schema
 
-  schema "create_pictures" do
+  schema "pictures" do
     field(:name, :string)
     field(:image, Mijncmd.Files.Image.Type)
 
