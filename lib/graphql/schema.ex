@@ -36,9 +36,11 @@ defmodule Mijncmd.GraphQL.Schema do
   mutation do
     import_types(Mijncmd.GraphQL.Mutations.User)
     import_types(Mijncmd.GraphQL.Mutations.Post)
+    import_types(Mijncmd.GraphQL.Mutations.Comment)
 
     import_fields(:user_mutations)
     import_fields(:post_mutations)
+    import_fields(:comment_mutations)
   end
 
   def context(absinthe_context) do

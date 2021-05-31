@@ -5,13 +5,12 @@ defmodule Mijncmd.Repo.Migrations.CreatePosts do
     create table(:posts) do
       add :title, :string, null: false
       add :slug, :string, null: false
+      add :body, :text
 
       add :cover, :string
 
-      add :description, :text
-      add :body, :text
-
       add :likes_count, :integer, default: 0
+      add :view_count, :integer, default: 0
 
       add :published, :boolean, default: false
       add :published_at, :naive_datetime

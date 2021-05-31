@@ -2,12 +2,14 @@ use Mix.Config
 
 # Configure your database
 config :mijncmd, Mijncmd.Repo,
-  username: "postgres",
-  password: "postgres",
-  database: "mijncmd_dev",
-  hostname: "localhost",
+  adapter: Ecto.Adapters.Postgres,
+  database: System.get_env("DB_NAME", "mijncmd_dev"),
+  hostname: System.get_env("DB_HOST", "localhost"),
+  username: System.get_env("DB_USER", "postgres"),
+  password: System.get_env("DB_PASS", "postgres"),
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
+
 
 # For development, we disable any cache and enable
 # debugging and code reloading.

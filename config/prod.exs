@@ -10,11 +10,25 @@ use Mix.Config
 # which you should run after static files are built and
 # before starting your production server.
 config :mijncmd, MijncmdWeb.Endpoint,
-  url: [host: "example.com", port: 80],
+  http: [port: System.get_env("HTTP_PORT", "4000")],
+  url: [
+    scheme: System.get_env("URL_SCHEME", "http"),
+    host: System.get_env("URL_HOST", "mijncmd.com"),
+    port: System.get_env("URL_PORT", "443")
+  ],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
 # Do not print debug messages in production
 config :logger, level: :info
+
+config :mijncmd, Mijncmd.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  database: System.get_env("DB_NAME", "mijncmd"),
+  hostname: System.get_env("DB_HOST", "db"),
+  password: SecretOrEnv.get("DB_PASS"),
+  pool_size: 40,
+  timeout: 60000,
+  username: System.get_env("DB_USER", "postgres")
 
 # ## SSL Support
 #
@@ -52,4 +66,4 @@ config :logger, level: :info
 
 # Finally import the config/prod.secret.exs which loads secrets
 # and configuration from environment variables.
-import_config "prod.secret.exs"
+# import_config "prod.secret.exs"

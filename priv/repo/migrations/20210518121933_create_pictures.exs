@@ -2,7 +2,7 @@ defmodule Mijncmd.Repo.Migrations.CreatePictures do
   use Ecto.Migration
 
   def change do
-    create table(:create_pictures) do
+    create table(:pictures) do
       add :name, :string
       add :image, :string
 
