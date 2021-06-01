@@ -12,8 +12,8 @@ use Mix.Config
 config :mijncmd, MijncmdWeb.Endpoint,
   http: [port: System.get_env("HTTP_PORT", "4000")],
   url: [
-    scheme: System.get_env("URL_SCHEME", "http"),
-    host: System.get_env("URL_HOST", "mijncmd.com"),
+    scheme: System.get_env("URL_SCHEME", "https"),
+    host: System.get_env("URL_HOST", "68.183.13.93"),
     port: System.get_env("URL_PORT", "443")
   ],
   cache_static_manifest: "priv/static/cache_manifest.json"
@@ -30,6 +30,16 @@ config :mijncmd, Mijncmd.Repo,
   timeout: 60000,
   username: System.get_env("DB_USER", "postgres")
 
+if System.get_env("HTTPS") do
+  config :mijncmd, Mijncmd.Endpoint,
+    https: [
+      port: System.get_env("HTTPS_PORT", "443"),
+      cipher_suite: :strong,
+      otp_app: :mijncmd,
+      certfile: System.get_env("HTTPS_CERTFILE"),
+      keyfile: System.get_env("HTTPS_KEYFILE")
+    ]
+end
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key
