@@ -10,13 +10,13 @@ use Mix.Config
 # which you should run after static files are built and
 # before starting your production server.
 config :mijncmd, MijncmdWeb.Endpoint,
-  http: [port: System.get_env("HTTP_PORT", "4000")],
-  url: [
-    scheme: System.get_env("URL_SCHEME", "https"),
-    host: System.get_env("URL_HOST", "68.183.13.93"),
-    port: System.get_env("URL_PORT", "443")
+  http: [port: 4000],
+  https: [
+    port: 4001,
+    cipher_suite: :strong,
+    certfile: "priv/cert/selfsigned.pem",
+    keyfile: "priv/cert/selfsigned_key.pem"
   ],
-  cache_static_manifest: "priv/static/cache_manifest.json"
 
 # Do not print debug messages in production
 config :logger, level: :info
@@ -30,16 +30,6 @@ config :mijncmd, Mijncmd.Repo,
   timeout: 60000,
   username: System.get_env("DB_USER", "postgres")
 
-if System.get_env("HTTPS") do
-  config :mijncmd, Mijncmd.Endpoint,
-    https: [
-      port: System.get_env("HTTPS_PORT", "443"),
-      cipher_suite: :strong,
-      otp_app: :mijncmd,
-      certfile: System.get_env("HTTPS_CERTFILE"),
-      keyfile: System.get_env("HTTPS_KEYFILE")
-    ]
-end
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key

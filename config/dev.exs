@@ -23,8 +23,8 @@ config :mijncmd, MijncmdWeb.Endpoint,
     port: 4001,
     cipher_suite: :strong,
     certfile: "priv/cert/selfsigned.pem",
-    keyfile: "priv/cert/selfsigned_key.pem"
-  ],
+    keyfile: "priv/cert/selfsigned_key.pem",
+  ]
 
 # ## SSL Support
 #
@@ -52,17 +52,6 @@ config :mijncmd, MijncmdWeb.Endpoint,
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"
-
-# Sometimes we need HTTPS, like when futzing with captchas
-if System.get_env("HTTPS") do
-  config :mijncmd, Mijncmd.Endpoint,
-    https: [
-      port: 4001,
-      cipher_suite: :strong,
-      certfile: "priv/cert/selfsigned.pem",
-      keyfile: "priv/cert/selfsigned_key.pem"
-    ]
-end
 
 # Set a higher stacktrace during development. Avoid configuring such
 # in production as building large stacktraces may be expensive.
