@@ -9,7 +9,7 @@ services:
       mix local.rebar --force &&
       mix deps.get &&
       mix ecto.setup &&
-      mix phx.gen.cert &&
+      mix phx.gen.cert mijncmd mijncmd.local 68.183.13.93 &&
       mix phx.server'
     ports:
       - '4000:4000'
