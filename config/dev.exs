@@ -17,11 +17,12 @@ config :mijncmd, Mijncmd.Repo,
 # The watchers configuration can be used to run external
 # watchers to your application. For example, we use it
 # with webpack to recompile .js and .css sources.
-config :mijncmd, MijncmdWeb.Endpoint,
+config :mijncmd, Mijncmd.Endpoint,
   http: [port: 4000],
   https: [
     port: 4001,
     cipher_suite: :strong,
+    otp_app: :mijncmd,
     certfile: "priv/cert/selfsigned.pem",
     keyfile: "priv/cert/selfsigned_key.pem",
   ]
