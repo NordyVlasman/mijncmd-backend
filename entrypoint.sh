@@ -2,7 +2,7 @@
 
 while ! pg_isready -q -h $DATABASE_HOST -p $DATABASE_PORT -U $DATABASE_USER
 do
-  echo "Waiting for database."
+  echo "Waiting for database. $DATABASE_HOST : $DATABASE_PORT & $DATABASE_USER"
   sleep 2
 done
 

@@ -36,6 +36,7 @@ if config_env() != :test do
   database_ssl = (System.get_env("DATABASE_SSL") || "true") == "true"
 
   config :mijncmd, Mijncmd.Repo,
+    adapter: Ecto.Adapters.Postgres,
     ssl: database_ssl,
     hostname: database_host,
     username: database_user,
@@ -80,45 +81,4 @@ if config_env() != :test do
   #
   # Then you can assemble a release by calling `mix release`.
   # See `mix help release` for more information.
-end
-
-# force en in test:
-default_locale =
-  case config_env() do
-    :test -> "en"
-    _ -> String.trim(System.get_env("MW_DEFAULT_LOCALE") || "en")
-  end
-
-config :gettext, :default_locale, default_locale
-config :timex, :default_locale, default_locale
-
-parsed_feature_brainstorming_removal_after_days =
-  String.trim(System.get_env("MW_FEATURE_BRAINSTORMING_REMOVAL_AFTER_DAYS") || "")
-
-delete_brainstormings_after_days =
-  if parsed_feature_brainstorming_removal_after_days != "" do
-    String.to_integer(parsed_feature_brainstorming_removal_after_days)
-  else
-    30
-  end
-
-# enable/disable brainstorming teasers and configure delete brainstormings option:
-config :mijncmd, :options,
-  feature_brainstorming_teasers:
-    Enum.member?(
-      ["", "true"],
-      String.trim(System.get_env("MW_FEATURE_BRAINSTORMING_TEASER") || "")
-    ),
-  feature_brainstorming_removal_after_days: delete_brainstormings_after_days
-
-if config_env() == :prod || config_env() == :dev do
-  config :mijncmd, Oban,
-    repo: Mijncmd.Repo,
-    plugins: [
-      {Oban.Plugins.Cron,
-       crontab: [
-         {"@midnight", Mijncmd.Worker.RemoveBrainstormingsAndUsersAfterPeriodWorker}
-       ]}
-    ],
-    queues: [default: 5]
 end

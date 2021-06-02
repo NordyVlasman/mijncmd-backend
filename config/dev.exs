@@ -1,9 +1,9 @@
 use Mix.Config
 
 # Configure your database
-config :mijncmd, Mijncmd.Repo,
-  show_sensitive_data_on_connection_error: true,
-  pool_size: 10
+# config :mijncmd, Mijncmd.Repo,
+#   show_sensitive_data_on_connection_error: true,
+#   pool_size: 10
 
 # For development, we disable any cache and enable
 # debugging and code reloading.
@@ -12,7 +12,7 @@ config :mijncmd, Mijncmd.Repo,
 # watchers to your application. For example, we use it
 # with webpack to recompile .js and .css sources.
 config :mijncmd, Mijncmd.Endpoint,
-  http: [ip: {0, 0, 0, 0}, port: 4000],
+  http: [ip: {0, 0, 0, 0}, port: 80],
   debug_errors: true,
   code_reloader: true,
   check_origin: false
