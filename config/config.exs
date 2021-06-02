@@ -21,8 +21,6 @@ config :mijncmd, Mijncmd.Guardian,
 
 # Configures the endpoint
 config :mijncmd, MijncmdWeb.Endpoint,
-  url: [host: "localhost"],
-  secret_key_base: "wWNVNM19yWwqL2q2EAoavuYDgYP0Rh2RWq06clo5+fif/ckpk3TnKRepT62OAkNo",
   render_errors: [view: MijncmdWeb.ErrorView, accepts: ~w(json), layout: false],
   pubsub_server: Mijncmd.PubSub,
   live_view: [signing_salt: "HId9xzQv"]

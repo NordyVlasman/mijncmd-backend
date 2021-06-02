@@ -1,0 +1,42 @@
+version: "3.8"
+
+services:
+  mijncmd:
+    container_name: mijncmd
+    build:
+      context: .
+      target: development
+    environment:
+      DATABASE_USER: postgres
+      DATABASE_USER_PASSWORD: postgres
+      DATABASE_NAME: mijncmd
+      DATABASE_PORT: 5432
+      DATABASE_HOST: db
+      DATABASE_SSL: "false"
+      PORT: 80
+      SECRET_KEY_BASE: "wWNVNM19yWwqL2q2EAoavuYDgYP0Rh2RWq06clo5+fif/ckpk3TnKRepT62OAkNo"
+      URL_HOST: localhost
+    ports:
+      - "80:80"
+    depends_on:
+      - db
+    volumes:
+      - ./lib:/app/lib
+      - ./test:/app/test
+      - /app/deps/
+      - /app/uploads/
+      - /app/priv/static
+
+  db:
+    image: postgres:9.6
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /var/lib/postgresql/data/pgdata
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+volumes:
+  pgdata:
