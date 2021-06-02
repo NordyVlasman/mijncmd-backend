@@ -7,7 +7,7 @@ defmodule Mijncmd do
     children = [
       Mijncmd.Endpoint,
       Mijncmd.Repo,
-      {Phoenix.PubSub, name: Mijncmd.PubSub}
+      {Phoenix.PubSub, name: Mijncmd.PubSub},
     ]
 
     {:ok, _} = Logger.add_backend(Sentry.LoggerBackend)

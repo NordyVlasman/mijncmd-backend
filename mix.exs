@@ -7,7 +7,7 @@ defmodule Mijncmd.MixProject do
       version: "0.1.0",
       elixir: "~> 1.7",
       elixirc_paths: elixirc_paths(Mix.env()),
-      compilers: extra_compilers(Mix.env()) ++ Mix.compilers(),
+      compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps()
@@ -27,10 +27,6 @@ defmodule Mijncmd.MixProject do
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "test/support"]
   defp elixirc_paths(_), do: ["lib"]
-
-  # Specifies wich paths to compile per environment
-  defp extra_compilers(:prod), do: [:phoenix]
-  defp extra_compilers(_), do: [:phoenix]
 
   # Specifies your project dependencies.
   #
