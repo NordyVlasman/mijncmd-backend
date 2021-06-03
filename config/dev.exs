@@ -12,16 +12,16 @@ use Mix.Config
 # watchers to your application. For example, we use it
 # with webpack to recompile .js and .css sources.
 config :mijncmd, Mijncmd.Endpoint,
-  http: [ip: {0, 0, 0, 0}, port: 80],
+  http: [ip: {0, 0, 0, 0}, port: 4000],
   debug_errors: true,
   code_reloader: true,
-  check_origin: false,
-  https: [
-    port: 4001,
-    cipher_suite: :strong,
-    keyfile: "priv/cert/selfsigned_key.pem",
-    certfile: "priv/cert/selfsigned.pem"
-  ]
+  check_origin: false
+  # https: [
+  #   port: 443,
+  #   cipher_suite: :strong,
+  #   keyfile: "priv/cert/selfsigned_key.pem",
+  #   certfile: "priv/cert/selfsigned.pem"
+  # ]
 # ## SSL Support
 #
 # In order to use HTTPS in development, a self-signed
