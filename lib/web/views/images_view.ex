@@ -7,7 +7,7 @@ defmodule Mijncmd.ImageView do
     %{
       success: 1,
       file: %{
-        url: "http://localhost:4000#{fileurl}"
+        url: "https://api.nordyvlasman.nl#{fileurl}"
       }
     }
   end

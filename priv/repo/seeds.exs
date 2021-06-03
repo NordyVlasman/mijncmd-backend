@@ -539,9 +539,3 @@ Repo.insert!(%Mijncmd.Skill{
   description: "Schrijven",
   slug: "schrijven"
 })
-
-Repo.insert!(%Mijncmd.Skill{
-  name: "Film",
-  description: "Film",
-  slug: "film"
-})
