@@ -30,8 +30,8 @@ services:
         volumes:
             - ./lib:/app/lib
             - ./test:/app/test
+            - ./uploads:/app/uploads
             - /app/deps/
-            - /app/uploads/
             - /app/priv/static
     postgres:
         image: postgres:12.6
