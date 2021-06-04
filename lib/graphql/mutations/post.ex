@@ -11,6 +11,7 @@ defmodule Mijncmd.GraphQL.Mutations.Post do
       arg(:body, non_null(:string))
       arg(:cover, :upload)
       arg(:skills, list_of(:id))
+      arg(:products, list_of(:id))
 
       resolve(&PostResolver.create_post/3)
     end

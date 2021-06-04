@@ -1,42 +1,65 @@
 version: "3.8"
 
 services:
-  mijncmd:
-    container_name: mijncmd
-    build:
-      context: .
-      target: development
-    environment:
-      DATABASE_USER: postgres
-      DATABASE_USER_PASSWORD: postgres
-      DATABASE_NAME: mijncmd
-      DATABASE_PORT: 5432
-      DATABASE_HOST: db
-      DATABASE_SSL: "false"
-      PORT: 80
-      SECRET_KEY_BASE: "wWNVNM19yWwqL2q2EAoavuYDgYP0Rh2RWq06clo5+fif/ckpk3TnKRepT62OAkNo"
-      URL_HOST: localhost
-    ports:
-      - "80:80"
-    depends_on:
-      - db
-    volumes:
-      - ./lib:/app/lib
-      - ./test:/app/test
-      - /app/deps/
-      - /app/uploads/
-      - /app/priv/static
-
-  db:
-    image: postgres:9.6
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      PGDATA: /var/lib/postgresql/data/pgdata
-    restart: always
-    ports:
-      - "5432:5432"
-    volumes:
-      - pgdata:/var/lib/postgresql/data
+    mijncmd:
+        container_name: mijncmd
+        networks:
+            - traefik-global-proxy
+            - backend
+        build:
+            context: .
+            target: development
+        environment:
+            DATABASE_USER: postgres
+            DATABASE_USER_PASSWORD: postgres
+            DATABASE_NAME: mijncmd
+            DATABASE_PORT: 5432
+            DATABASE_HOST: postgres
+            DATABASE_SSL: "false"
+            PORT: 4000
+            SECRET_KEY_BASE: "wWNVNM19yWwqL2q2EAoavuYDgYP0Rh2RWq06clo5+fif/ckpk3TnKRepT62OAkNo"
+            URL_HOST: localhost
+        labels:
+            - "traefik.enable=true"
+            - "traefik.frontend.rule=Host:mijncmd.local"
+            - "traefik.http.routers.mijncmd.rule=Host(`mijncmd.docker.localhost`)"
+            - "traefik.http.routers.mijncmd.entrypoints=websecure"
+            - "traefik.http.routers.mijncmd.tls.certresolver=letsencrypt"
+        depends_on:
+            - postgres
+        volumes:
+            - ./lib:/app/lib
+            - ./test:/app/test
+            - ./uploads:/app/uploads
+            - /app/deps/
+            - /app/priv/static
+    postgres:
+        image: postgres:12.6
+        networks:
+            - backend
+        ports:
+            - '5432:5432'
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+        environment:
+            POSTGRES_PASSWORD: postgres
+            POSTGRES_USER: postgres
+    traefik:
+        image: traefik:v2.4
+        networks:
+            - traefik-global-proxy
+        ports:
+        - "80:80"
+        - "443:443"
+        - "8080:8080"
+        volumes:
+        - "./traefik/traefik.toml:/etc/traefik/traefik.toml"
+        - "./letsencrypt:/letsencrypt"
+        - /var/run/docker.sock:/var/run/docker.sock
 volumes:
-  pgdata:
+    postgres_data: {}
+
+networks:
+    traefik-global-proxy:
+        external: true
+    backend:

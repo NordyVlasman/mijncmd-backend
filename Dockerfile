@@ -17,6 +17,8 @@ FROM elixir_alpine AS development
 
 RUN mix do deps.get, compile
 
+EXPOSE 4000
+
 RUN ["chmod", "+x", "./entrypoint.sh"]
 ENTRYPOINT ["sh", "./entrypoint.sh"]
 

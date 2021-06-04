@@ -1,9 +1,9 @@
 use Mix.Config
 
 # Configure your database
-config :mijncmd, Mijncmd.Repo,
-  show_sensitive_data_on_connection_error: true,
-  pool_size: 10
+# config :mijncmd, Mijncmd.Repo,
+#   show_sensitive_data_on_connection_error: true,
+#   pool_size: 10
 
 # For development, we disable any cache and enable
 # debugging and code reloading.
@@ -16,6 +16,12 @@ config :mijncmd, Mijncmd.Endpoint,
   debug_errors: true,
   code_reloader: true,
   check_origin: false
+  # https: [
+  #   port: 443,
+  #   cipher_suite: :strong,
+  #   keyfile: "priv/cert/selfsigned_key.pem",
+  #   certfile: "priv/cert/selfsigned.pem"
+  # ]
 # ## SSL Support
 #
 # In order to use HTTPS in development, a self-signed
@@ -29,12 +35,12 @@ config :mijncmd, Mijncmd.Endpoint,
 #
 # The `http:` config above can be replaced with:
 #
-#     https: [
-#       port: 4001,
-#       cipher_suite: :strong,
-#       keyfile: "priv/cert/selfsigned_key.pem",
-#       certfile: "priv/cert/selfsigned.pem"
-#     ],
+    # https: [
+    #   port: 4001,
+    #   cipher_suite: :strong,
+    #   keyfile: "priv/cert/selfsigned_key.pem",
+    #   certfile: "priv/cert/selfsigned.pem"
+    # ],
 #
 # If desired, both `http:` and `https:` keys can be
 # configured to run both http and https servers on

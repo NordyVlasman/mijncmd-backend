@@ -17,3 +17,15 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   * Docs: https://hexdocs.pm/phoenix
   * Forum: https://elixirforum.com/c/phoenix-forum
   * Source: https://github.com/phoenixframework/phoenix
+
+docker run -d --name mijncmd \
+  -p 127.0.0.1:80:4000 \
+  -e DATABASE_HOST="localhost" \
+  -e DATABASE_PORT="5432" \
+  -e DATABASE_SSL="false" \
+  -e DATABASE_NAME="mijncmd_prod" \
+  -e DATABASE_USER="postgres" \
+  -e DATABASE_USER_PASSWORD="postgres" \
+  -e SECRET_KEY_BASE="wWNVNM19yWwqL2q2EAoavuYDgYP0Rh2RWq06clo5+fif/ckpk3TnKRepT62OAkNo" \
+  -e URL_HOST="localhost" \
+  ghcr.io/nordyvlasman/mijncmd
