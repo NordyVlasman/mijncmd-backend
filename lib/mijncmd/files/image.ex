@@ -12,7 +12,7 @@ defmodule Mijncmd.Files.Image do
     Enum.member?(@extension_whitelist, file_extension)
   end
 
-  def transform(:thumb, {file, scope}) do
+  def transform(:thumb, {file, _scope}) do
     is_gif = get_file_name(file) == ".gif"
     is_svg = get_file_name(file) == ".svg"
 
@@ -23,7 +23,7 @@ defmodule Mijncmd.Files.Image do
     end
   end
 
-  def filename(version, {file, scope}) do
+  def filename(version, {file, _scope}) do
     file_name = Path.basename(file.file_name, Path.extname(file.file_name))
     "#{version}_#{file_name}"
   end

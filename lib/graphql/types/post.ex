@@ -31,6 +31,14 @@ defmodule Mijncmd.GraphQL.Types.Post do
       end)
     end
 
+    field :products, list_of(:product) do
+      resolve(fn post, _, _ ->
+        post = post
+        |> Post.preload_products()
+        {:ok, post.products}
+      end)
+    end
+
     field :author, non_null(:user) do
       resolve(fn post, _, _ ->
         post = post

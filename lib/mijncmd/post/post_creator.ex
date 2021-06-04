@@ -1,5 +1,5 @@
 defmodule Mijncmd.PostCreate do
-  alias Mijncmd.{User, Repo, Post, PostLike, PostSkill}
+  alias Mijncmd.{User, Repo, Post, PostLike, PostSkill, PostProduct}
   import Ecto.Query, warn: false
 
   # ##########################
@@ -12,6 +12,8 @@ defmodule Mijncmd.PostCreate do
   #
   # ps: if it looks stupid but it works, it ain't stupid xoxoxo
   # #########################
+
+  # TODO: - Plz make this dynamic Nordy xx Nordy
   def create(%User{} = user, params) do
     params = Map.put(params, :author_id, user.id)
 
@@ -27,6 +29,15 @@ defmodule Mijncmd.PostCreate do
       |> PostSkill.create_changeset(postSkill)
       |> Repo.insert()
     end)
+
+    params.products do
+      Enum.each(params.products, fn product ->
+        postProduct = %{post_id: post.id, product_id: product}
+        %PostProduct{}
+        |> PostProduct.create_changeset(postProduct)
+        |> Repo.insert()
+      end)
+    end
 
     {:ok, post}
   end

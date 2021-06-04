@@ -11,6 +11,7 @@ defmodule Mijncmd.GraphQL.Schema do
   import_types(Mijncmd.GraphQL.Types.User)
   import_types(Mijncmd.GraphQL.Types.Post)
   import_types(Mijncmd.GraphQL.Types.Skill)
+  import_types(Mijncmd.GraphQL.Types.Product)
   import_types(Mijncmd.GraphQL.Types.Comment)
   import_types(Mijncmd.GraphQL.Types.MutationResult)
 
@@ -30,6 +31,10 @@ defmodule Mijncmd.GraphQL.Schema do
 
     field :skills, list_of(:skill) do
       resolve(&Mijncmd.GraphQL.Resolvers.Skill.get_skills/3)
+    end
+
+    field :products, list_of(:product) do
+      resolve(&Mijncmd.GraphQL.Resolvers.Product.get_products/3)
     end
   end
 
