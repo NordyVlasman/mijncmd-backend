@@ -7,7 +7,7 @@ defmodule Mijncmd.ImageView do
     %{
       success: 1,
       file: %{
-        url: "https://mijncmd.docker.localhost#{fileurl}"
+        url: "https://api.nordyvlasman.nl#{fileurl}"
       }
     }
   end
