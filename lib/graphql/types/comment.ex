@@ -12,6 +12,8 @@ defmodule Mijncmd.GraphQL.Types.Comment do
 
     field(:upvote_count, :integer)
 
+    field(:inserted_at, :datetime)
+
     field :has_upvoted, :boolean do
       resolve(fn comment, _, info ->
         user = info.context[:conn].assigns[:current_user]

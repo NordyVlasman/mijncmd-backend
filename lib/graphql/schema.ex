@@ -13,11 +13,16 @@ defmodule Mijncmd.GraphQL.Schema do
   import_types(Mijncmd.GraphQL.Types.Skill)
   import_types(Mijncmd.GraphQL.Types.Product)
   import_types(Mijncmd.GraphQL.Types.Comment)
+  import_types(Mijncmd.GraphQL.Types.Role)
   import_types(Mijncmd.GraphQL.Types.MutationResult)
 
   query do
     field :user, :user do
       resolve(&Mijncmd.GraphQL.Resolvers.User.current_user/3)
+    end
+
+    field :users, list_of(:user) do
+      resolve(&Mijncmd.GraphQL.Resolvers.User.list_users/3)
     end
 
     field :posts, list_of(:post) do
@@ -36,16 +41,22 @@ defmodule Mijncmd.GraphQL.Schema do
     field :products, list_of(:product) do
       resolve(&Mijncmd.GraphQL.Resolvers.Product.get_products/3)
     end
+
+    field :roles, non_null(list_of(non_null(:role_item))) do
+      resolve(&Mijncmd.GraphQL.Resolvers.Role.list/3)
+    end
   end
 
   mutation do
     import_types(Mijncmd.GraphQL.Mutations.User)
     import_types(Mijncmd.GraphQL.Mutations.Post)
     import_types(Mijncmd.GraphQL.Mutations.Comment)
+    import_types(Mijncmd.GraphQL.Mutations.Product)
 
     import_fields(:user_mutations)
     import_fields(:post_mutations)
     import_fields(:comment_mutations)
+    import_fields(:product_mutations)
   end
 
   def context(absinthe_context) do

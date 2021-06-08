@@ -20,6 +20,7 @@ defmodule Mijncmd.GraphQL.Resolvers.Post do
   def get_posts(_, _, _) do
     posts =
       Post
+      |> Ecto.Query.order_by(desc: :inserted_at)
       |> Repo.all()
     {:ok, posts}
   end

@@ -12,7 +12,7 @@ services:
         environment:
             DATABASE_USER: postgres
             DATABASE_USER_PASSWORD: postgres
-            DATABASE_NAME: mijncmd
+            DATABASE_NAME: mijncmd_dev
             DATABASE_PORT: 5432
             DATABASE_HOST: postgres
             DATABASE_SSL: "false"
@@ -22,7 +22,7 @@ services:
         labels:
             - "traefik.enable=true"
             - "traefik.frontend.rule=Host:mijncmd.local"
-            - "traefik.http.routers.mijncmd.rule=Host(`mijncmd.docker.localhost`)"
+            - "traefik.http.routers.mijncmd.rule=Host(`api.nordyvlasman.nl`)"
             - "traefik.http.routers.mijncmd.entrypoints=websecure"
             - "traefik.http.routers.mijncmd.tls.certresolver=letsencrypt"
         depends_on:
@@ -30,12 +30,13 @@ services:
         volumes:
             - ./lib:/app/lib
             - ./test:/app/test
+            - ./priv:/app/priv
             - ./uploads:/app/uploads
             - /app/deps/
-            - /app/priv/static
     postgres:
         image: postgres:12.6
         networks:
+            - traefik-global-proxy
             - backend
         ports:
             - '5432:5432'

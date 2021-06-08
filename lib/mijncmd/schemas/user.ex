@@ -4,18 +4,18 @@ defmodule Mijncmd.User do
 
   alias Mijncmd.{
     User,
-    Files.Image
+    Files.Image,
+    UserSkill,
+    Repo
   }
 
   @derive {Inspect, except: [:password]}
   schema "users" do
     field(:email, :string)
     field(:name, :string)
+    field(:title, :string)
     field(:handle, :string)
-
-    field(:website_url, :string)
-    field(:github_url, :string)
-    field(:dribbble_url, :string)
+    field(:role, :string)
 
     field(:avatar, Image.Type)
 
@@ -26,13 +26,16 @@ defmodule Mijncmd.User do
     has_many(:access_tokens, Mijncmd.AccessToken)
     has_many(:posts, Mijncmd.Post)
 
+    has_many(:user_skills, UserSkill, on_delete: :delete_all)
+    has_many(:skills, through: [:user_skills, :skill])
+
     many_to_many(:likes, Mijncmd.Post, join_through: "post_likes", on_replace: :delete, on_delete: :delete_all)
 
     timestamps()
   end
 
-  @required_fields ~w(name email password handle)a
-  @optional_fields ~w(website_url github_url dribbble_url avatar)a
+  @required_fields ~w(name email title password handle role)a
+  @optional_fields ~w(avatar)a
   def create_changeset(model, params) do
     model
     |> cast(params, @required_fields ++ @optional_fields)
@@ -64,8 +67,12 @@ defmodule Mijncmd.User do
       changeset
     end
   end
+
   def valid_password?(%User{hashed_password: hashed_password}, password)
     when is_binary(hashed_password) and byte_size(password) > 0 do
       Bcrypt.verify_pass(password, hashed_password)
-    end
+  end
+
+  def preload_skills(%Ecto.Query{} = query), do: Ecto.Query.preload(query, :skills)
+  def preload_skills(user), do: Repo.preload(user, :skills)
 end
