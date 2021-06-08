@@ -5,7 +5,7 @@ defmodule Mijncmd.Files.Image do
   }
 
   @versions [:original, :thumb]
-  @extension_whitelist ~w(.jpg .jpeg .gif .png .svg)
+  @extension_whitelist ~w(.jpg .jpeg .gif .png .svg .heic)
 
   def validate({ file, _}) do
     file_extension = get_file_name(file)
@@ -15,8 +15,11 @@ defmodule Mijncmd.Files.Image do
   def transform(:thumb, {file, _scope}) do
     is_gif = get_file_name(file) == ".gif"
     is_svg = get_file_name(file) == ".svg"
+    is_heic = get_file_name(file) == ".heic"
 
-    if !is_gif and !is_svg do
+    if is_heic do
+      {:convert, "-thumbnail 100x100^ -gravity center -extent 100x100 -format png *.heic", :png}
+    else if !is_gif and !is_svg do
       {:convert, "-thumbnail 100x100^ -gravity center -extent 100x100 -format png", :png}
     else
       :noaction
