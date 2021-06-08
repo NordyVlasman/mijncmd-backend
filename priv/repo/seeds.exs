@@ -11,6 +11,190 @@
 # # and so on) as they will fail if something goes wrong.
 alias Mijncmd.Repo
 
+## Products
+
+Repo.insert!(%Mijncmd.Product{
+    name: "Sketch",
+    slug: "sketch",
+    description: "Sketch"
+  }
+)
+
+Repo.insert!(%Mijncmd.Product{
+    name: "Adobe Illustrator",
+    slug: "adobe-illustrator",
+    description: "Adobe Illustrator"
+})
+
+Repo.insert!(%Mijncmd.Product{
+    name: "Adobe Indesign",
+    slug: "adobe-indesign",
+    description: "Adobe Indesign"
+})
+
+Repo.insert!(%Mijncmd.Product{
+    name: "Adobe Photoshop",
+    slug: "adobe-photoshop",
+    description: "Adobe Photoshop"
+})
+
+Repo.insert!(%Mijncmd.Product{
+    name: "Adobe After Effects",
+    slug: "adobe-after-effects",
+    description: "Adobe After Effects"
+})
+
+Repo.insert!(%Mijncmd.Product{
+    name: "Adobe Premiere Pro",
+    slug: "adobe-premiere-pro",
+    description: "Adobe Premiere Pro"
+})
+
+Repo.insert!(%Mijncmd.Product{
+    name: "Adobe Audition",
+    slug: "adobe-audition",
+    description: "Adobe Audition"
+})
+
+Repo.insert!(%Mijncmd.Product{
+    name: "Figma",
+    slug: "figma",
+    description: "Figma"
+})
+
+Repo.insert!(%Mijncmd.Product{
+    name: "Lightroom",
+    slug: "lightroom",
+    description: "Lightroom"
+})
+
+Repo.insert!(%Mijncmd.Product{
+    name: "Visual Studio Code",
+    slug: "visual-studio-code",
+    description: "Visual Studio Code"
+})
+
+Repo.insert!(%Mijncmd.Product{
+    name: "XCode",
+    slug: "xcode",
+    description: "XCode"
+})
+
+Repo.insert!(%Mijncmd.Product{
+    name: "Sublime Text",
+    slug: "sublime-text",
+    description: "Sublime Text"
+})
+
+Repo.insert!(%Mijncmd.Product{
+    name: "Procreate",
+    slug: "procreate",
+    description: "Procreate"
+})
+
+Repo.insert!(%Mijncmd.Product{
+    name: "Adobe XD",
+    slug: "adobe-xd",
+    description: "Adobe Experience Design"
+})
+
+Repo.insert!(%Mijncmd.Product{
+    name: "Blender",
+    slug: "blender",
+    description: "Blender 3D"
+})
+
+Repo.insert!(%Mijncmd.Product{
+    name: "Cinema 4D",
+    slug: "cinema-4d",
+    description: "Cinema 4D"
+})
+
+Repo.insert!(%Mijncmd.Product{
+    name: "Final Cut Pro X",
+    slug: "final-cut-pro",
+    description: "Final Cut Pro X"
+})
+
+Repo.insert!(%Mijncmd.Product{
+    name: "DaVinci Resolve",
+    slug: "davinci-resolve",
+    description: "Davinci Resolve"
+})
+
+Repo.insert!(%Mijncmd.Product{
+    name: "Logic Pro X",
+    slug: "logic-pro",
+    description: "Logic Pro X"
+})
+
+Repo.insert!(%Mijncmd.Product{
+    name: "Garageband",
+    slug: "garageband",
+    description: "Garageband"
+})
+
+Repo.insert!(%Mijncmd.Product{
+    name: "Fruity Loops",
+    slug: "fruity-loops",
+    description: "Fruity Loops"
+})
+
+Repo.insert!(%Mijncmd.Product{
+    name: "Abelton",
+    slug: "abelton",
+    description: "Abelton"
+})
+
+Repo.insert!(%Mijncmd.Product{
+    name: "Adobe RAW",
+    slug: "adobe-raw",
+    description: "Adobe Raw"
+})
+
+Repo.insert!(%Mijncmd.Product{
+    name: "Storyboarder",
+    slug: "storyboarder",
+    description: "Storyboarder"
+})
+
+Repo.insert!(%Mijncmd.Product{
+    name: "Unity",
+    slug: "unity",
+    description: "Unity"
+})
+
+Repo.insert!(%Mijncmd.Product{
+    name: "Unreal Engine",
+    slug: "unreal-engine",
+    description: "Unreal Engine"
+})
+
+Repo.insert!(%Mijncmd.Product{
+    name: "Autocad",
+    slug: "autocad",
+    description: "Autocad"
+})
+
+Repo.insert!(%Mijncmd.Product{
+    name: "Adobe Animate",
+    slug: "adobe-animate",
+    description: "Adobe Animate"
+})
+
+Repo.insert!(%Mijncmd.Product{
+    name: "InVision Studio",
+    slug: "invision-studio",
+    description: "Invision Studio"
+})
+
+Repo.insert!(%Mijncmd.Product{
+    name: "Webflow",
+    slug: "webflow",
+    description: "Webflow"
+})
+
+## Skills
 Repo.insert!(%Mijncmd.Skill{
   name: "UX",
   description: "User experience",

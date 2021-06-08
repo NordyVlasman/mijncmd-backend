@@ -3,6 +3,7 @@ defmodule Mijncmd.Skill do
 
   alias Mijncmd.{
     PostSkill,
+    UserSkill,
     Helpers.Regexp
   }
 

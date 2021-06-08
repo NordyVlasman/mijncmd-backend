@@ -3,6 +3,7 @@ defmodule Mijncmd.Repo.Migrations.CreateUserSkills do
 
   def change do
     create table(:user_skills) do
+      add :position, :integer
       add :user_id, references(:users, on_delete: :delete_all)
       add :skill_id, references(:skills, on_delete: :delete_all)
 

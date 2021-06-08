@@ -11,6 +11,11 @@ defmodule Mijncmd.GraphQL.Types.MutationResult do
     field(:errors, list_of(:string))
   end
 
+  object :mutated_product do
+    field(:product, :product)
+    field(:errors, list_of(:string))
+  end
+
   object :mutated_user_with_access_token do
     field(:user, :user)
     field(:access_token, :string)

@@ -30,14 +30,12 @@ defmodule Mijncmd.PostCreate do
       |> Repo.insert()
     end)
 
-    params.products do
-      Enum.each(params.products, fn product ->
-        postProduct = %{post_id: post.id, product_id: product}
-        %PostProduct{}
-        |> PostProduct.create_changeset(postProduct)
-        |> Repo.insert()
-      end)
-    end
+    Enum.each(params.products, fn product ->
+      postProduct = %{post_id: post.id, product_id: product}
+      %PostProduct{}
+      |> PostProduct.create_changeset(postProduct)
+      |> Repo.insert()
+    end)
 
     {:ok, post}
   end

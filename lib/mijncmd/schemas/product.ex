@@ -2,14 +2,14 @@ defmodule Mijncmd.Product do
   use Mijncmd.Schema
 
   alias Mijncmd.{
-    Helpers.Regexp
+    Helpers.Regexp,
+    PostProduct
   }
 
   schema "products" do
     field(:name, :string)
     field(:slug, :string)
     field(:description, :string)
-    field(:product_image, :string)
 
     has_many(:post_products, PostProduct, on_delete: :delete_all)
     has_many(:posts, through: [:post_products, :post])
@@ -17,7 +17,7 @@ defmodule Mijncmd.Product do
     timestamps()
   end
 
-  @required_fields ~w(name slug product_image)a
+  @required_fields ~w(name slug)a
   @optional_fields ~w(description)a
   def create_changeset(model, params) do
     model
