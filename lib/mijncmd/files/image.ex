@@ -5,7 +5,7 @@ defmodule Mijncmd.Files.Image do
   }
 
   @versions [:original, :thumb]
-  @extension_whitelist ~w(.jpg .jpeg .gif .png .svg)
+  @extension_whitelist ~w(.jpg .jpeg .gif .png .svg .heic)
 
   def validate({ file, _}) do
     file_extension = get_file_name(file)
