@@ -18,11 +18,12 @@ defmodule Mijncmd.Files.Image do
     is_heic = get_file_name(file) == ".heic"
 
     if is_heic do
-      {:convert, "-thumbnail 100x100^ -gravity center -extent 100x100 -format png *.heic", :png}
-    else if !is_gif and !is_svg do
-      {:convert, "-thumbnail 100x100^ -gravity center -extent 100x100 -format png", :png}
-    else
-      :noaction
+        {:convert, "-thumbnail 100x100^ -gravity center -extent 100x100 -format png *.heic", :png}
+      else if !is_gif and !is_svg do
+        {:convert, "-thumbnail 100x100^ -gravity center -extent 100x100 -format png", :png}
+      else
+        :noaction
+      end
     end
   end
 

@@ -22,7 +22,7 @@ services:
         labels:
             - "traefik.enable=true"
             - "traefik.frontend.rule=Host:mijncmd.local"
-            - "traefik.http.routers.mijncmd.rule=Host(`api.nordyvlasman.nl`)"
+            - "traefik.http.routers.mijncmd.rule=Host(`mijncmd.docker.localhost`)"
             - "traefik.http.routers.mijncmd.entrypoints=websecure"
             - "traefik.http.routers.mijncmd.tls.certresolver=letsencrypt"
         depends_on:
