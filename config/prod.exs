@@ -30,7 +30,6 @@ config :mijncmd, Mijncmd.Repo,
 # to the previous section and set your `:url` port to 443:
 #
 config :mijncmd, MijncmdWeb.Endpoint,
-    http: [port: {:system, "PORT"}, compress: true],
     load_from_system_env: true,
     url: [scheme: "https", host: "mijncmd.herokuapp.com", port: 443],
     force_ssl: [rewrite_on: [:x_forwarded_proto]]
