@@ -21,24 +21,20 @@ config :mijncmd, Mijncmd.Repo,
   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
   ssl: true,
 
-http: [port: 443],
-url: [scheme: "https", host: "mijncmd.herokuapp.com", port: 443],
-force_ssl: [rewrite_on: [:x_forwarded_proto]]
+# http: [port: 443],
+# url: [scheme: "https", host: "mijncmd.herokuapp.com", port: 443],
+# force_ssl: [rewrite_on: [:x_forwarded_proto]]
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key
 # to the previous section and set your `:url` port to 443:
 #
-#     config :mijncmd, MijncmdWeb.Endpoint,
-#       ...
-#       url: [host: "example.com", port: 443],
-#       https: [
-#         port: 443,
-#         cipher_suite: :strong,
-#         keyfile: System.get_env("SOME_APP_SSL_KEY_PATH"),
-#         certfile: System.get_env("SOME_APP_SSL_CERT_PATH"),
-#         transport_options: [socket_opts: [:inet6]]
-#       ]
+  config :mijncmd, MijncmdWeb.Endpoint,
+    http: [port: {:system, "PORT"}],
+    load_from_system_env: true,
+     url: [scheme: "https", host: "mijncmd.herokuapp.com", port: 443],
+     force_ssl: [rewrite_on: [:x_forwarded_proto]]
+
 #
 # The `cipher_suite` is set to `:strong` to support only the
 # latest and more secure SSL ciphers. This means old browsers
