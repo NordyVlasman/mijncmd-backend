@@ -19,7 +19,7 @@ config :mijncmd, Mijncmd.Repo,
   adapter: Ecto.Adapters.Postgres,
   url: System.get_env("DATABASE_URL"),
   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
-  ssl: true,
+  ssl: true
 
 # http: [port: 443],
 # url: [scheme: "https", host: "mijncmd.herokuapp.com", port: 443],
@@ -29,7 +29,7 @@ config :mijncmd, Mijncmd.Repo,
 # To get SSL working, you will need to add the `https` key
 # to the previous section and set your `:url` port to 443:
 #
-  config :mijncmd, MijncmdWeb.Endpoint,
+config :mijncmd, MijncmdWeb.Endpoint,
     http: [port: {:system, "PORT"}],
     load_from_system_env: true,
      url: [scheme: "https", host: "mijncmd.herokuapp.com", port: 443],
