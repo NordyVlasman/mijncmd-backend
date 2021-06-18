@@ -21,7 +21,7 @@ config :mijncmd, Mijncmd.Repo,
   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
   ssl: true,
 
-http: [port: {:system, "PORT"}],
+http: [port: 443],
 url: [scheme: "https", host: "mijncmd.herokuapp.com", port: 443],
 force_ssl: [rewrite_on: [:x_forwarded_proto]]
 # ## SSL Support
