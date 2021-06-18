@@ -17,7 +17,7 @@ config :logger, level: :info,
 
 http: [port: {:system, "PORT"}],
 url: [scheme: "https", host: "mijncmd.herokuapp.com", port: 443],
-force_ssl: [rewrite_on: [:x_forwarded_proto]],
+force_ssl: [rewrite_on: [:x_forwarded_proto]]
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key
@@ -54,4 +54,4 @@ force_ssl: [rewrite_on: [:x_forwarded_proto]],
 
 # Finally import the config/prod.secret.exs which loads secrets
 # and configuration from environment variables.
-# import_config "prod.secret.exs"
+import_config "prod.secret.exs"
