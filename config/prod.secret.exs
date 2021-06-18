@@ -1,3 +1,5 @@
+use Mix.Config
+
 config :mijncmd, Mijncmd.Repo,
  ssl: true,
  url: database_url,
