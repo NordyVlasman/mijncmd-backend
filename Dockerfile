@@ -19,6 +19,8 @@ RUN mix do deps.get, compile
 
 EXPOSE 4000
 
+RUN ["chmod", "600", "./letsencrypt"]
+RUN ["chmod", "600", "./letsencrypt/acme.json"]
 RUN ["chmod", "+x", "./entrypoint.sh"]
 ENTRYPOINT ["sh", "./entrypoint.sh"]
 
