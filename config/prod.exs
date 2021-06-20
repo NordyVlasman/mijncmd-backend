@@ -12,11 +12,11 @@ use Mix.Config
 # Do not print debug messages in production
 config :logger, level: :info
 
-config :mijncmd, Mijncmd.Repo,
-  adapter: Ecto.Adapters.Postgres,
-  url: System.get_env("DATABASE_URL"),
-  pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
-  ssl: true
+# config :mijncmd, Mijncmd.Repo,
+#   adapter: Ecto.Adapters.Postgres,
+#   url: System.get_env("DATABASE_URL"),
+#   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
+#   ssl: true
 
 # http: [port: 443],
 # url: [scheme: "https", host: "mijncmd.herokuapp.com", port: 443],
@@ -26,11 +26,11 @@ config :mijncmd, Mijncmd.Repo,
 # To get SSL working, you will need to add the `https` key
 # to the previous section and set your `:url` port to 443:
 #
-config :mijncmd, MijncmdWeb.Endpoint,
-    http: [port: {:system, "PORT"}],
-    load_from_system_env: true,
-    url: [scheme: "https", host: "mijncmd.herokuapp.com", port: 443],
-    force_ssl: [rewrite_on: [:x_forwarded_proto]]
+# config :mijncmd, MijncmdWeb.Endpoint,
+#     http: [port: {:system, "PORT"}],
+#     load_from_system_env: true,
+#     url: [scheme: "https", host: "mijncmd.herokuapp.com", port: 443],
+#     force_ssl: [rewrite_on: [:x_forwarded_proto]]
 
 #
 # The `cipher_suite` is set to `:strong` to support only the
@@ -53,4 +53,4 @@ config :mijncmd, MijncmdWeb.Endpoint,
 
 # Finally import the config/prod.secret.exs which loads secrets
 # and configuration from environment variables.
-import_config "prod.secret.exs"
+# import_config "prod.secret.exs"
